@@ -17,6 +17,7 @@ The  software needed to run this lesson are listed below. Versions reported are 
 | NanoStat  | 1.5.0   | [link](https://github.com/wdecoster/nanostat)| Nanopore read QC|
 | nanofilt  | 2.6.0   |[link](https://github.com/wdecoster/nanofilt) |Nanopore read filtering |
 | Flye      | 2.9.1-b1780 | [link](https://github.com/fenderglass/Flye) | Long-read genome assembler |
+| BWA       | 0.7.17  | [link](https://bio-bwa.sourceforge.net/bwa.shtml) | Read mapping, assembly indexing |
 | medaka    | 1.6.0   | [link](https://github.com/nanoporetech/medaka) | Assembly polishing |
 | Pilon     | 1.24    | [link](https://github.com/broadinstitute/pilon/wiki)| Nanopore assembly polishing |
 | SAMtools  | 1.15.1  | [link](http://www.htslib.org/doc/samtools.html) | Read mapping |
