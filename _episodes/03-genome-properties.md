@@ -25,7 +25,7 @@ ls data/
 mkdir results/
 ```
 
-What can you tell about the data? {% looking for: .fastq, size, Illumina and ONT. You'll note that only one fastq file - which contains both forward and reverse reads. %}
+What can you tell about the data? {% comment %}  looking for: .fastq, size, Illumina and ONT. You'll note that only one fastq file - which contains both forward and reverse reads. {% endcomment %} 
 
 ### 3.2 Input data quality assessment
 
@@ -113,14 +113,13 @@ jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
 
 First, let's look at the SLURM resources. What can you tell about this job?
 
-
 Now let's look at how we are navigating our directory structure. Where is the job being processed? Are any other paths included in this job?
 
 Then let's look at the commands we'll be passing to Jellyfish. There are two parts to this job - in the first stage, Jellyfish counts the k-mers. In the second stage it computes the histogram of these counts. As you can see, there are a number of different parameters used, denoted by `-`.
 
 A key part of bioinformatics is getting familiar with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
 
-{% https://github.com/gmarcais/Jellyfish - Usage link - discuss how manuals are essential to understand underlying algorithms, and the various parameters in the processes. %}
+{% comment %} https://github.com/gmarcais/Jellyfish - Usage link - discuss how manuals are essential to understand underlying algorithms, and the various parameters in the processes. {% endcomment %} 
 
 Let's save our `jellyfish.sl` file, and run it.
 
