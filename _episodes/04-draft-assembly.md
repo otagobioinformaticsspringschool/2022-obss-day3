@@ -14,15 +14,15 @@ keypoints:
 
 ## 4.1 Genome assembly options
 
-There are a huge range of genome assembly tools available. Many assemblers are designed for specific data types.
+There are a huge range of genome assembly tools available. Many assemblers are designed for specific data types (e.g., short- vs long-reads). It is important to select an assembler that is appropriate to the data type(s) and characteristics of the focal genome. Reading assembler manuals and associated articles can be really helpful to understand the strengths and weaknesses of the underlying algorithms implemented by the assembly program.
 
 [FIG TO INCLUDE]
 
 ## 4.2 Assembling a genome
 
-Today we will be using [Flye](https://github.com/fenderglass/Flye), an assembler designed to work with long-read data. 
+Today we will be using [Flye](https://github.com/fenderglass/Flye), an assembler designed to work with long-read data. Flye has modes for Nanopore and PacBio long-read data, that take into account the characteristics specific to each data type. 
 
-Let's make the script `flye.sl`, containing the content below.
+Although genome assembly algorithms are complex, using an assembler is typically very straightforward. Let's make the script `flye.sl`, containing the content below.
 
 ```
 #!/bin/bash -e
