@@ -3,18 +3,18 @@ title: "Exploring input data and genome characteristics"
 teaching: 0
 exercises: 0
 questions:
-- "Key question (FIXME)"
+- "How do the characteristics of short-read and long-read datasets differ?"
+- "What underlying characteristics of a genome may complicate genome assembly?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Build an understanding of how input data characteristics and underlying genome properties can impact genome assembly"
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "While long-read data are beneficial for producing high-quality genomes, short-read data can help understand the underlying properties of the genome of the focal species."
+- "It is important to consider characteristics such as genome size, ploidy, and heterozygosity before assembling a genome, as this may influence program choice, parameter-setting, and overall assembly quality."
 ---
-FIXME
 
 {% include links.md %}
 
-
-### 3.1 Setup for the day
+## 3.1 Setup
 
 First, let's move into the `genome_assembly` directory for today's workshop. Check out the directory structure, what data has been provided, and make a new directory for results outputs.
 
@@ -27,7 +27,7 @@ mkdir results/
 
 What can you tell about the data? {% comment %}  looking for: .fastq, size, Illumina and ONT. You'll note that only one fastq file - which contains both forward and reverse reads. {% endcomment %} 
 
-### 3.2 Input data quality assessment
+## 3.2 Input data quality assessment
 
 Our raw data has been pre-processed, so let's first get an overview of the quality and metrics of these processed data. For our Nanopore long-read data, there are specific tools that can assess quality and other metrics. One example is the program `NanoStat`. 
 
@@ -77,7 +77,7 @@ Once `FastQC` has finished, check your queue to see whether NanoStat is still ru
 
 Now take a look at the results for `FastQC` and `NanoStat`, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
 
-### 3.3 K-mer counting
+## 3.3 K-mer counting
 
 Before assembling a genome, it is helpful to assess the characteristics of the input data. These data can tell us useful information about expected genome size (if we don't already have an estimate from flow cytometry or other sources), expected heterozygosity, and ploidy. Differences in these characteristics may make genomes difficult to assemble, and may require us to use different strategies.
 
