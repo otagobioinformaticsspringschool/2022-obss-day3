@@ -32,8 +32,9 @@ Although genome assembly algorithms are complex, using an assembler is typically
 #SBATCH --output=%x.%j.flye.out
 #SBATCH --error=%x.%j.flye.err
 #SBATCH --time=2:00:00
-#SBATCH --mem=50G
+#SBATCH --mem=70G
 #SBATCH --ntasks=1
+#SBATCH --nodes=1
 #SBATCH --cpus-per-task=32 
 
 module purge
