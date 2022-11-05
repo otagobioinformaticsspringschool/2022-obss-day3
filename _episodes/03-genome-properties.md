@@ -136,4 +136,4 @@ less jellyfish.*.err
 
 To visualise the results of k-mer analysis, we'll use [GenomeScope](http://qb.cshl.edu/genomescope/). Our input reads were produced from 150 bp Illumina sequencing.
 
-What can you tell from these results, and how do your results compare to the examples at https://www.nature.com/articles/s41467-020-14998-3/figures/1?
+What can you tell from these results, and how do your results compare to the examples at <https://www.nature.com/articles/s41467-020-14998-3/figures/1>?
