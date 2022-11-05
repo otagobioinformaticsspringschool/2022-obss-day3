@@ -73,7 +73,7 @@ cd results/
 fastqc ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq
 ```
 
-Once `FastQC` has finished, check your queue to see whether NanoStat is still running, using `squeue -u <nesi.id>`. If it's finished, use `less` to check your `.err` and `.out` logs for any issues.
+Once `FastQC` has finished, check your queue to see whether NanoStat is still running, using `squeue -u <nesi.id>`. If it's finished, use `less` to check your `.err` and `.out` logs in the `scripts` directory for any issues.
 
 Now take a look at the results for `FastQC` and `NanoStat`, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
 
@@ -81,10 +81,12 @@ Now take a look at the results for `FastQC` and `NanoStat`, and discuss the over
 
 Before assembling a genome, it is helpful to assess the characteristics of the input data. These data can tell us useful information about expected genome size (if we don't already have an estimate from flow cytometry or other sources), expected heterozygosity, and ploidy. Differences in these characteristics may make genomes difficult to assemble, and may require us to use different strategies.
 
-Today we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some of these characteristics. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. We'll be using a program called `Jellyfish` to count k-mers in our short-read data to assess characteristics of the genome we are assembling.
+Today we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some of these characteristics. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. 
+
+Today we'll be using a program called `Jellyfish` to count k-mers in our short-read data to assess characteristics of the genome we are assembling. Before we run this, let's navigate back to our `scripts` directory.
 
 ```
-cd scripts/
+cd ../scripts/
 ```
 
 Let's create a script for `Jellyfish` analysis with `nano jellyfish.sl`.
@@ -132,6 +134,12 @@ We can check where our job is in the queue using `squeue -u <nesi.id>`. Then whe
 ```
 less jellyfish.*.out
 less jellyfish.*.err
+```
+
+Check what outputs have been written to your `results` directory.
+
+```
+ls ../results/
 ```
 
 To visualise the results of k-mer analysis, we'll use [GenomeScope](http://qb.cshl.edu/genomescope/). Our input reads were produced from 150 bp Illumina sequencing.
