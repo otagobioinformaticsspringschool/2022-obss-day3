@@ -73,9 +73,9 @@ cd results/
 fastqc ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq
 ```
 
-Once `FastQC` has finished, check your queue to see whether NanoStat is still running, using `squeue -u <nesi.id>`. If it's finished, use `less` to check your `.err` and `.out` logs in the `scripts` directory for any issues.
+Once FastQC has finished, check your queue to see whether NanoStat is still running, using `squeue -u <nesi.id>`. If it's finished, use `less` to check your `.err` and `.out` logs in the `scripts` directory for any issues.
 
-Now take a look at the results for `FastQC` and `NanoStat`, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
+Now take a look at the results for FastQC and NanoStat, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
 
 ## 3.3 K-mer counting
 
@@ -83,13 +83,14 @@ Before assembling a genome, it is helpful to assess the characteristics of the i
 
 Today we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some of these characteristics. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. 
 
-Today we'll be using a program called `Jellyfish` to count k-mers in our short-read data to assess characteristics of the genome we are assembling. Before we run this, let's navigate back to our `scripts` directory.
+Today we'll be using a program called Jellyfish to count k-mers in our short-read data to assess characteristics of the genome we are assembling. Let's navigate back to our `scripts` directory, and create a new script.
 
 ```
 cd ../scripts/
+nano jellyfish.sl
 ```
 
-Let's create a script for `Jellyfish` analysis with `nano jellyfish.sl`.
+Copy the script below into your `jellyfish.sl` file.
 
 ```
 #!/bin/bash -e
@@ -117,9 +118,11 @@ First, let's look at the SLURM resources. What can you tell about this job?
 
 Now let's look at how we are navigating our directory structure. Where is the job being processed? Are any other paths included in this job?
 
-Then let's look at the commands we'll be passing to Jellyfish. There are two parts to this job - in the first stage, Jellyfish counts the k-mers. In the second stage it computes the histogram of these counts. As you can see, there are a number of different parameters used, denoted by `-`.
+Then let's look at the commands we'll be passing to Jellyfish. There are two steps to this process:
+  1. Jellyfish counts the k-mers
+  2. Jellyfish computes the histogram of these counts. 
 
-A key part of bioinformatics is getting familiar with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
+As you can see, there are a number of different parameters used, denoted by `-`. A key part of bioinformatics is building familiarity with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
 
 {% comment %} https://github.com/gmarcais/Jellyfish - Usage link - discuss how manuals are essential to understand underlying algorithms, and the various parameters in the processes. {% endcomment %} 
 
