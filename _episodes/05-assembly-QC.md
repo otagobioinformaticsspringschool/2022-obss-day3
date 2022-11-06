@@ -9,34 +9,60 @@ objectives:
 keypoints:
 - "First key point. Brief Answer to questions. (FIXME)"
 ---
-FIXME
 
 {% include links.md %}
 
-5.1 Genome assemby stats with QUAST
-5.2 Completeness estimates with BUSCO
-5.3 Coverage plots
-could use samtools depth, but perhaps mosdepth?
+# Assembly quality assessment
 
-5.4 Contaminant scans [demo ]
+{% comment %} I think it's important to have this step here rather than last for a) timing reasons, but also to indicate that we may want to collect metrics at many steps in the process. {% endcomment %}
+
+There are many factors to consider when assessing the quality of a genome assembly. Not only are we looking for an assembly that spans the expected genome size, but also we need to consider a range of other metrics.
+
+In an ideal world, a genome assembly will span the expected genome size, be highly contiguous with one scaffold representing one chromosome and generally be comprised of long continuous scaffolds. The AT:GC ratio should be representative of that expected for the focal taxon. The assembly should contain the full set of expected gene orthologs (those genes common across species within a taxon). An ideal assembly will have consistent coverage across its length when the raw data is mapped gainst it, with no evidence of assembly errors. It will also contain only sequences from the focal organism, with no contaminating sequences from other species (e.g., no fungal reads in a bird genome).
+
+[Nat dream genome space figure]
+
+Even if an assembly is highly contiguous, or shows high completeness in terms of gene orthologs, there may be other issues that may not be identified using only those metrics. To investigate all of these aspects of an assembly requires a range of processes. 
+
+## 01. Basic metrics
+
+An initial step in the assembly QC process is to generate basic assembly metrics. Today we will be using the `assemblathon_stats.pl` script to extract these metrics. You will need to modify the name of the input file depending on the read set you used for the assembly.
+
+```
+assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*.fasta > ~/obss_2022/genome_assembly/results/flye_raw_*_QC.txt
+```
+
+Now let's view the results.
+
+```
+~/obss_2022/genome_assembly/results/flye_raw_*_QC.txt
+```
+
+Enter the metrics for your assembly into the shared spreadsheet. Are everyone's results the same? If not, why may this be? How does your assembly compare to others? 
+
+## 02. Gene orthologs
+
+To assess assembly completeness in terms of the set of gene orthologs, we use a program called [BUSCO](https://busco.ezlab.org/). This identifies the presence of genes from a common database of gene common among the focal taxon (e.g., fungi) within the assembly. These genes are those that arose in a common ancestor and been passed on to descendant species.  
 
 ```
 #!/bin/bash -e
 
-#SBATCH --job-name=busco_example
-#SBATCH --output=AW_%j.out
-#SBATCH --error=AW_%j.err
-#SBATCH --time=12:00:00
-#SBATCH --mem=18G
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --job-name=busco
 #SBATCH --account=nesi02659
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+#SBATCH --time=00:20:00
+#SBATCH --mem=4G
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=16
 
 module purge
-
 module load BUSCO/5.1.3-gimkl-2020a
 
-cd /nesi/project/nesi02659/GenomeAssembly/Test_outputs 
+cd ~/obss_2022/genome_assembly/results/ 
 
-busco  -i /nesi/project/nesi02659/GenomeAssembly/Test_outputs/medaka_polishing/consensus.fasta  -c 8 -o medaka_fungi_odb10_busco -m genome -l fungi_odb10
+# Don't forget to correct the name of the input assembly file
+busco  -i flye_raw_*.fasta -c 10 -o flye_raw_*_busco -m genome -l fungi_odb10
 ```
+
+These results act as a proxy to tell us how 'complete' the assembly is. Can you find the file containing a summary of the BUSCO results? Add the metrics for your assembly to the shared spreadsheet. How do the results for your assembly differ from others? Why might this be?
