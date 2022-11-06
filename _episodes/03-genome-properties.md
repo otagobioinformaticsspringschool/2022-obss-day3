@@ -29,7 +29,7 @@ What can you tell about the data? {% comment %}  looking for: .fastq, size, Illu
 
 ## 3.2 Input data quality assessment
 
-Our raw data has been pre-processed, so let's first get an overview of the quality and metrics of these processed data. For our Nanopore long-read data, there are specific tools that can assess quality and other metrics. One example is the program `NanoStat`. 
+Our raw data has been pre-processed, so let's first get an overview of the quality and metrics of these processed data. For our Nanopore long-read data, there are specific tools that can assess quality and other metrics. One example is the program [NanoStat](https://github.com/wdecoster/nanostat). 
 
 As we saw earlier, we can use SLURM to submit scripts to the queue, which allows us to do multiple processes simultaneously. Let's navigate to the `scripts` directory and make a SLURM script to assess our Nanopore data.
 
