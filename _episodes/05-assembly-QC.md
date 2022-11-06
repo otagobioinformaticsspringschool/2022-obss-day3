@@ -29,13 +29,13 @@ Even if an assembly is highly contiguous, or shows high completeness in terms of
 An initial step in the assembly QC process is to generate basic assembly metrics. Today we will be using the `assemblathon_stats.pl` script to extract these metrics. You will need to modify the name of the input file depending on the read set you used for the assembly.
 
 ```
-assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*.fasta > ~/obss_2022/genome_assembly/results/flye_raw_*_QC.txt
+assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta > ~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
 ```
 
 Now let's view the results.
 
 ```
-~/obss_2022/genome_assembly/results/flye_raw_*_QC.txt
+~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
 ```
 
 Enter the metrics for your assembly into the shared spreadsheet. Are everyone's results the same? If not, why may this be? How does your assembly compare to others? 
@@ -61,8 +61,8 @@ module load BUSCO/5.1.3-gimkl-2020a
 
 cd ~/obss_2022/genome_assembly/results/ 
 
-# Don't forget to correct the name of the input assembly file
-busco  -i flye_raw_*.fasta -c 10 -o flye_raw_*_busco -m genome -l fungi_odb10
+# Don't forget to correct the name of the input assembly directory
+busco  -i flye_raw_*/assembly.fasta -c 10 -o flye_raw_assembly_busco -m genome -l fungi_odb10
 ```
 
 These results act as a proxy to tell us how 'complete' the assembly is. Can you find the file containing a summary of the BUSCO results? Add the metrics for your assembly to the shared spreadsheet. How do the results for your assembly differ from others? Why might this be?
