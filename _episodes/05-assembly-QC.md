@@ -66,3 +66,7 @@ busco  -i flye_raw_*.fasta -c 10 -o flye_raw_*_busco -m genome -l fungi_odb10
 ```
 
 These results act as a proxy to tell us how 'complete' the assembly is. Can you find the file containing a summary of the BUSCO results? Add the metrics for your assembly to the shared spreadsheet. How do the results for your assembly differ from others? Why might this be?
+
+## 03. Plotting coverage
+
+Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be broken.
