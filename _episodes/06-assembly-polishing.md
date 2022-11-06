@@ -54,10 +54,10 @@ After polishing the assembly with the Nanopore long reads, we can also leverage 
 #SBATCH --account=nesi02659
 #SBATCH --output=%x.%j.out
 #SBATCH --error=%x.%j.err
-#SBATCH --time=1:00:00
-#SBATCH --mem=10G
+#SBATCH --time=40:00
+#SBATCH --mem=8G
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=4
 
 module purge
 module load BWA SAMtools
