@@ -7,7 +7,7 @@ exercises: 0
 
 {% include links.md %}
 
-{% comment %} Murray, can you remove the teaching/objectives and the key points boxes please? {% endcomment %}
+{% comment %} Murray, can you remove the teaching/objectives and the key points boxes please? Also, figures aren't working properly in the final version, I'm not sure of correct syntax etc here. {% endcomment %}
 
 While genome assembly typically consists of a straightforward series of processes, it requires many choices at each step in the process. These choices include: sequencing type, sequence coverage depth, trimming and filtering parameters, genome assembly program, and downstream steps including polishing, scaffolding, and more. Many of these choices will be determined in part by the biological characteristics of the focal species and the target application(s) for the genome assembly.
 
