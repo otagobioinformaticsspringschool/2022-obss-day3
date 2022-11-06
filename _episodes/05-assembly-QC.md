@@ -70,3 +70,8 @@ These results act as a proxy to tell us how 'complete' the assembly is. Can you 
 ## 03. Plotting coverage
 
 Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be broken.
+
+
+[ADD BWA MAPPING & DEPTH SCRIPT}
+
+So now we have an idea of our assembly characteristics. It can be useful to compare these metrics against those for other closely related taxa in the published literature. Like genome size, there may be some genome characteristics that are inherent to a taxon. For example, birds have highly conserved genomes, so we expect all bird genome assemblies to be around 1-1.5 Gb, and to see a particular skew to the AT:GC ratios. 
