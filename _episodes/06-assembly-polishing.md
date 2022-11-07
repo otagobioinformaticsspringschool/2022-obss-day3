@@ -115,4 +115,9 @@ java -Xmx16G -jar $EBROOTPILON/pilon.jar \
 
 Use `assemblathon_stats.pl` to investigate how polishing has impacted the basic assembly metrics. We can also modify our `BUSCO.sl` script to compare the gene completeness of this polished version of the assembly with our original draft. To do this, change the input directory and assembly filename to the Pilon output, and change the BUSCO output filename.
 
+For both long- and short-read polishing, you may multiple rounds of polishing continue to produce improvements in the assembly metrics.
+
+## 6.3 Annotation
+
+[Nat to add info, FUNannotate script, Joseph running analysis to add as an example in resources/ dir]
 
