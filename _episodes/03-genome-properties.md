@@ -14,9 +14,11 @@ keypoints:
 
 {% include links.md %}
 
-## 3.1 Setup
+## 3.1 Intro and setup
 
-First, let's move into the `genome_assembly` directory for today's workshop. Check out the directory structure, what data has been provided, and make a new directory for results outputs.
+Before assembling a genome, it is helpful to assess the characteristics of the input data. These data can tell us useful information about expected genome size (if we don't already have an estimate from flow cytometry or other sources), expected heterozygosity, and ploidy. Differences in these characteristics may make genomes difficult to assemble, and may require us to use different trimming, filtering, and assembly strategies.
+
+Let's start by considering what data has been provided for today's workshop. First, let's move into the `genome_assembly` directory. Take a look at the directory structure, what data has been provided, and make a new directory for results outputs.
 
 ```
 cd ~/obss_2022/genome_assembly/
@@ -31,7 +33,7 @@ What can you tell about the data? {% comment %}  looking for: .fastq, size, Illu
 
 Our raw data has been pre-processed, so let's first get an overview of the quality and metrics of these processed data. For our Nanopore long-read data, there are specific tools that can assess quality and other metrics. One example is the program [NanoStat](https://github.com/wdecoster/nanostat). 
 
-As we saw earlier, we can use SLURM to submit scripts to the queue, which allows us to do multiple processes simultaneously. Let's navigate to the `scripts` directory and make a SLURM script to assess our Nanopore data.
+As we saw earlier, we can use SLURM to submit scripts to the queue, which allows us to perform multiple processes simultaneously. Let's navigate to the `scripts` directory and make a SLURM script to assess our Nanopore data.
 
 ```
 cd ~/obss_2022/genome_assembly/scripts/
@@ -79,9 +81,7 @@ Now take a look at the results for FastQC and NanoStat, and discuss the overall 
 
 ## 3.3 K-mer counting
 
-Before assembling a genome, it is helpful to assess the characteristics of the input data. These data can tell us useful information about expected genome size (if we don't already have an estimate from flow cytometry or other sources), expected heterozygosity, and ploidy. Differences in these characteristics may make genomes difficult to assemble, and may require us to use different strategies.
-
-Today we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some of these characteristics. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. 
+Next we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some characteristics of the sequenced genome. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. 
 
 Today we'll be using a program called Jellyfish to count k-mers in our short-read data to assess characteristics of the genome we are assembling. Let's navigate back to our `scripts` directory, and create a new script.
 
@@ -145,6 +145,6 @@ Check what outputs have been written to your `results` directory.
 ls ../results/
 ```
 
-To visualise the results of k-mer analysis, we'll use [GenomeScope](http://qb.cshl.edu/genomescope/). Our input reads were produced from 150 bp Illumina sequencing.
+To visualise the results of k-mer analysis, import your `.histo` file produced by Jellyfish into the [GenomeScope](http://qb.cshl.edu/genomescope/) webtool. Note: The input reads were produced from 150 bp Illumina sequencing.
 
 What can you tell from these results, and how do your results compare to the examples at <https://www.nature.com/articles/s41467-020-14998-3/figures/1>?
