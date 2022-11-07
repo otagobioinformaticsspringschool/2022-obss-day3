@@ -83,5 +83,3 @@ head ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta
 As expected for a FASTA file, we can see a header line denoted by `>` followed by a sequence line representing an assembled contig.
 
 Congratulations, you've assembled a genome! But wait, there's more...
-
-You can see that If we jump to the end of the Flye log, we can see it prints out the contents of the output directory
