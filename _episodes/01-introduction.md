@@ -9,7 +9,7 @@ exercises: 0
 
 {% comment %} Murray, can you remove the teaching/objectives and the key points boxes please? Also, figures aren't working properly in the final version, I'm not sure of correct syntax etc here. {% endcomment %}
 
-<img align="right" width="15%" src="../fig/genome-assembly-flowchart-small.png">
+<img align="right" width="50%" src="../fig/genome-assembly-flowchart-small.png">
 While genome assembly typically consists of a straightforward series of processes, it requires many choices at each step in the process. These choices include: sequencing type, sequence coverage depth, trimming and filtering parameters, genome assembly program, and downstream steps including polishing, scaffolding, and more. Many of these choices will be determined in part by the biological characteristics of the focal species and the target application(s) for the genome assembly.
 
 Today we will assemble a small fungal genome using Oxford Nanopore Technologies long-read sequencing data in combination with Illumina short-read data. While we assemble this genome, we will consider the impacts of characteristics of the input data on each of the steps in the process. 
