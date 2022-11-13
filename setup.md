@@ -1,9 +1,12 @@
 ---
 title: Setup
 ---
-This workshop is designed to be conducted on the [NeSI](https://www.nesi.org.nz) compute infrastructure. All software and data is already set up for you to use during the workshop.
 
-{% comment %} Data is PFR's and unlikely to be made available for public use, so not sure about adding info on running locally {% endcomment %} 
+## Platform and data access
+
+This workshop is designed to be conducted on the [NeSI](https://www.nesi.org.nz) compute infrastructure. All software and data are already set up for you to use during the workshop.
+
+{% comment %} Data is PFR's and unlikely to be made available for public use at this time, so not sure about adding info on running locally {% endcomment %} 
 
 ## Software
 
