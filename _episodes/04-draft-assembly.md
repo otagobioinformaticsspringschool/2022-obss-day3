@@ -1,13 +1,13 @@
 ---
 title: "Draft genome assembly"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
-- "Key question (FIXME)"
+- "What considerations should be taken into account when selecting a genome assembler?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Assemble a small fungal genome."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "There are a wide variety of genome assembly programs available, each with specific strengths, weaknesses, and requirements. Building familiarity with a range of assemblers by reading program manuals and associated articles can be helpful."
 ---
 
 {% include links.md %}
