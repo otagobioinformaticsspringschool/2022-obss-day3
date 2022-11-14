@@ -14,20 +14,49 @@ keypoints:
 
 {% include links.md %}
 
-## 3.1 Intro and setup
+## 3.1 Background and setup
 
-Before assembling a genome, it is helpful to assess the characteristics of the input data. These data can tell us useful information about expected genome size (if we don't already have an estimate from flow cytometry or other sources), expected heterozygosity, and ploidy. Differences in these characteristics may make genomes difficult to assemble, and may require us to use different trimming, filtering, and assembly strategies.
+It is getting easier and cheaper to sequence and assemble genomes. However, at the start of a genome project very little may be known about the genome properties of your organism of interest. Take genome size, for example. The amount and types of sequencing you would do, and the choice of assembly software will all be influenced by this parameter. There are 3 main approaches to obtaining a genome size estimate: 
+1. If you are lucky to be working on a system where flow cytometry has been performed to quantify the amount of DNA (in picograms) in the nucleus of the cells of your organism, then you will have an estimate of genome size and ploidy to set alongside your draft sequence assembly. Such estimates are not always available, however. 
+2.  You might take a best guess, based on what is known about related taxa. In some cases this will be helpful. Birds, for example, display relatively little interspecific variation in genome size (typically 1.3Gb, reported range from 1-2.1Gb).  In other cases, genome size can vary considerably: plant genome sizes range from 0.063Gb (the carnivorous plant Genlisea) to 149Gb (*Paris japonica*, in the Order Liliales) and often closely related taxa may have quite different genome sizes. Ploidy variation is also common and can have a major impact on genome size.
+3. Genome size can be estimated from unassembled and relatively low coverage short-read sequence data using k-mer profiles. We will explore this approach today.
 
-Let's start by considering what data has been provided for today's workshop. First, let's move into the `genome_assembly` directory. Take a look at the directory structure, what data has been provided, and make a new directory for results outputs.
+This simple equation relates genome size to the amount of sequence data in an experiment and the coverage (which here means the average number of times that you have sequenced a base in the genome): 
+Genome size (G) = Total number of bases sequenced (T) / genome sequence coverage (N)
+
+> ## Exercise
+> 
+> If you obtain 10 million read pairs (i.e. 2 x 100 bp reads) of whole genome sequence data for the plant **Arabidopsis thaliana** (genome size 120 Mb), what would the expected mean coverage be?
+>
+>> ## Solution
+>> 
+>> ~16X 
+>> 10,000,000 reads x 200 bp reads = 2,000,000,000 bp = T.
+>> T / G = N 
+>> 2,000,000,000 bp / 120,000,000 bp = 16.67X coverage. 
+> {: .solution}
+{: .challenge}
+
+
+Before we start, let's move into the `genome_assembly` directory and consider what data has been provided for today's workshop. First, . Take a look at the directory structure, what data has been provided, and make a new directory for results outputs.
 
 ```
 cd ~/obss_2022/genome_assembly/
 ls 
-ls data/
+ls -l data/ # the command ls -l displays the files in a list, with additional information
 mkdir results/
 ```
 
-What can you tell about the data? {% comment %}  looking for: .fastq, size, Illumina and ONT. You'll note that only one fastq file - which contains both forward and reverse reads. {% endcomment %} 
+> ## Exercise
+> 
+> What can you tell about the input data at first glance?
+>
+>> ## Solution
+>> 
+>> The input data is all in FASTQ format, which we have used previously in OBSS sessions.
+>> There are two main data types: Illumina (short-read sequencing data) and ONT (Oxford Nanopore Technologies long-read sequencing data). 
+> {: .solution}
+{: .challenge}
 
 ## 3.2 Input data quality assessment
 
@@ -79,11 +108,46 @@ Once FastQC has finished, check your queue to see whether NanoStat is still runn
 
 Now take a look at the results for FastQC and NanoStat, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
 
-## 3.3 K-mer counting
+## 3.3 K-mers and k-mer profiles
 
-Next we are going to use our processed Illumina short-read data to count k-mers that can be used to explore some characteristics of the sequenced genome. K-mers are sequence sub-strings of length *k* (i.e., a DNA sequence of a specified length). Genome assembly algorithms typically use k-mers to connect sequences to one another. K-mer counting algorithms are typically based around the properties of short reads with consistent length and high quality, so these algorithms may perform poorly with long-read data that has more variable lengths and qualities. 
+A **k-mer** is a substring of length k.  
 
-Today we'll be using a program called Jellyfish to count k-mers in our short-read data to assess characteristics of the genome we are assembling. Let's navigate back to our `scripts` directory, and create a new script.
+The maximum number of unique k-mers is given by 4<sup>k</sup>.
+
+The numbers of k-mers contained within a sequence of length L is given by the equation L – K +1, where L is the length of sequence and K is the k-mer length.
+A **k-mer profile** is a histogram in which the counts of the occurrences of each unique k-mer in the dataset are plotted. The x-axis shows the count of k-mer occurrence, often termed **coverage** or **depth**, and the y-axis the number of distinct k-mers which report that coverage/depth value.
+
+> ## Exercise
+> 
+> Consider the following 10bp sequence:
+>   GTAGAGCTGT 
+> Calculate how many 3-mers are there using the equation L - K + 1. What are all the possible 3-mer sequences?
+>
+>> ## Solution
+>> When L = 10 and K = 3: L - K + 1 = 10 - 3 + 1 = 8.
+>> There are 8 3-mers in the sequence:
+>> 			GTA, TAG, AGA, GAG, AGC, GCT, CTG, TGT
+> {: .solution}
+{: .challenge}
+
+K-mers have some convenient properties for computational biology: There are a finite number of distinct k-mers and the counting of these can be based on unambiguous matching. K-mer profiles for genome property estimation are usually 17-31 bases long. As k-mer length increases the likelihood of it occurring uniquely in your genome increases, but so does the chance that it will overlap a sequence error. Although 4<sup>k</sup> quickly becomes very large as k increases, the proportion of the total possible number of unique k-mers that are actually present in a genome decreases.
+
+As we saw earlier, we can calculate G (genome size) using the equation G = T / N. However, at the outset of our analyses, we often only have a value for T. 
+
+We can obtain an estimate of the genome sequence coverage (N) by looking at the k-mer coverage, a property that can be calculated from unassembled reads in the following way:
+			N= (M*L) /(L-K+1)
+
+	Where: 
+		N = genome sequence coverage
+		M = the k-mer coverage (the peak of coverage on the k-mer profile plot)
+		L = read length
+		K = k-mer length
+
+By estimating N in this way, we can combine it with our knowledge of T to obtain an estimate of G.
+
+This approach to genome size estimation was proposed in the Giant Panda genome project, a landmark paper as it describes the first genome assembly to be generated from only short read Illumina sequencing (Li R, Fan W, Tian G, et al. 2010. The sequence and de novo assembly of the giant panda genome Nature. doi:10.1038/nature08696). 
+
+We are going to use our processed Illumina short-read data to count k-mers that can be used to explore some characteristics of the sequenced genome, using a program called Jellyfish with our short-read data. Let's navigate back to our `scripts` directory, and create a new script.
 
 ```
 cd ../scripts/
