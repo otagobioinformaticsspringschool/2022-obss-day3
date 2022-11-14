@@ -49,7 +49,13 @@ As you can see from the SLURM resources, we expect this job to take around 2 hrs
 ## 4.3 Later...
 {% comment %} I suppose the Spongebob '2 hrs later' image can't be used due to copyright...? {% endcomment %}
 
-First, let's check out `.err` and `.out` logs for Flye. Were there any issues? What can you tell about the process? What can you tell about the genome assembly? 
+> ## Exercise
+> First, let's check out `.err` and `.out` logs for Flye. Were there any issues? What can you tell about the process? What can you tell about the genome assembly? 
+>> ## Solution
+>> Take careful note of any ERROR messages. The logs describe the various processes implemented by Flye, and make some comments about the data along the way. At the end of the log there is a print-out of some brief assembly summary metrics, that will likely vary between groups. 
+> {: .solution}
+{: .challenge}
+
 
 Now let's investigate the outputs.
 
