@@ -1,13 +1,14 @@
 ---
 title: "Assessing assembly quality"
-teaching: 0
-exercises: 0
+teaching: 20
+exercises: 30
 questions:
-- "Key question (FIXME)"
+- "How do we know whether a genome assembly is of sufficient quality to be biologically accurate?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Explain key metrics used for assessing genome assembly quality."
+- "Generate metrics for the genome assembly produced."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "All genome assemblies are imperfect, but some are more imperfect than others. The quality of an assembly must be assessed using multiple lines of evidence."
 ---
 
 {% include links.md %}
