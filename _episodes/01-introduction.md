@@ -22,6 +22,7 @@ As genome sequencing and bioinformatic tools and technologies have rapidly devel
 > **Long-read sequencing** uses platforms such as Oxford Nanopore Technologies or PacBio SMRT to produce reads with length >10,000 bp. Despite initial relatively low quality, ONT sequencing has experienced myriad improvements in wet-lab protocols, sequencing technology, and bioinformatic processing, resulting in sequencing data that is competitive with that of the more expensive high-quality PacBio HiFi data. Large amounts (micrograms) of high molecular weight intact DNA are required for these sequencing types. PacBio platforms are not yet available in Aotearoa, which may be a limiting factor for sequencing projects with taonga focal species. 
 >
 > While all genome assemblies are imperfect, reference genomes built purely from short-read data are prone to assembly errors due in part to the challenges associated with assembling long and complex repetitive sequences, or correctly assembling large structural variants. Such errors can result in incomplete genome assemblies, false variant detection, and incorrect gene annotation. Knowing these short-comings, long-read sequencing is now considered almost essential for producing high-quality genome assemblies.  
+> {: .callout}
 
 ## 1.2 Steps in the genome assembly process
 
