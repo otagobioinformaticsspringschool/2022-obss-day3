@@ -258,12 +258,12 @@ The example below is for a pear genome. The profile left hand peak has a coverag
 > ## Exercise
 > The figure below is reproduced from Stevens et al. (2018; G3: GENES, GENOMES, GENETICS, 8:7, 2153-2165 <https://doi.org/10.1534/g3.118.200030>). The authors present k-mer profiles for six different walnut (Juglans) species.
 > 
-> <img width="75%"src="../fig/Whibley-k-mer-profiles3.jpg">
+> <img width="75%" src="../fig/Whibley-k-mer-profiles3.jpg">
 > 
 > Which of the species is (i) the most heterozygous and (ii) the least heterozygous? 
 > 
 >> ## Solution
->> i)	P stenoptera, ii)	J hindsii (based on the relative proportion in diploid vs haploid peaks).
+>> i)	*P. stenoptera*, ii)	*J. hindsii* (based on the relative proportion in diploid vs haploid peaks).
 > {: .solution}
 {: .challenge}
 
