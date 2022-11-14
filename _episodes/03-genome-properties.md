@@ -17,33 +17,37 @@ keypoints:
 ## 3.1 Background and setup
 
 It is getting easier and cheaper to sequence and assemble genomes. However, at the start of a genome project very little may be known about the genome properties of your organism of interest. Take genome size, for example. The amount and types of sequencing you would do, and the choice of assembly software will all be influenced by this parameter. There are 3 main approaches to obtaining a genome size estimate: 
-1. If you are lucky to be working on a system where flow cytometry has been performed to quantify the amount of DNA (in picograms) in the nucleus of the cells of your organism, then you will have an estimate of genome size and ploidy to set alongside your draft sequence assembly. Such estimates are not always available, however. 
-2.  You might take a best guess, based on what is known about related taxa. In some cases this will be helpful. Birds, for example, display relatively little interspecific variation in genome size (typically 1.3Gb, reported range from 1-2.1Gb).  In other cases, genome size can vary considerably: plant genome sizes range from 0.063Gb (the carnivorous plant Genlisea) to 149Gb (*Paris japonica*, in the Order Liliales) and often closely related taxa may have quite different genome sizes. Ploidy variation is also common and can have a major impact on genome size.
-3. Genome size can be estimated from unassembled and relatively low coverage short-read sequence data using k-mer profiles. We will explore this approach today.
+  1. If you are lucky to be working on a system where flow cytometry has been performed to quantify the amount of DNA (in picograms) in the nucleus of the cells of your organism, then you will have an estimate of genome size and ploidy to set alongside your draft sequence assembly. Such estimates are not always available, however. 
+  2.  You might take a best guess, based on what is known about related taxa. In some cases this will be helpful. Birds, for example, display relatively little interspecific variation in genome size (typically 1.3 Gb, reported range from 1-2.1 Gb).  In other cases, genome size can vary considerably: plant genome sizes range from 0.063 Gb (the carnivorous plant Genlisea) to 149 Gb (*Paris japonica*, in the Order Liliales) and often closely related taxa may have quite different genome sizes. Ploidy variation is also common and can have a major impact on genome size.
+  3. Genome size can be estimated from unassembled and relatively low coverage short-read sequence data using k-mer profiles. We will explore this approach today.
 
 This simple equation relates genome size to the amount of sequence data in an experiment and the coverage (which here means the average number of times that you have sequenced a base in the genome): 
-Genome size (G) = Total number of bases sequenced (T) / genome sequence coverage (N)
+
+  Genome size (G) = Total number of bases sequenced (T) / genome sequence coverage (N)
 
 > ## Exercise
 > 
-> If you obtain 10 million read pairs (i.e. 2 x 100 bp reads) of whole genome sequence data for the plant **Arabidopsis thaliana** (genome size 120 Mb), what would the expected mean coverage be?
+> If you obtain 10 million read pairs (i.e. 2 x 100 bp reads) of whole genome sequence data for the plant *Arabidopsis thaliana* (genome size 120 Mb), what would the expected mean coverage be?
 >
 >> ## Solution
 >> 
 >> ~16X 
+>> 
 >> 10,000,000 reads x 200 bp reads = 2,000,000,000 bp = T.
+>> 
 >> T / G = N 
+>> 
 >> 2,000,000,000 bp / 120,000,000 bp = 16.67X coverage. 
 > {: .solution}
 {: .challenge}
 
 
-Before we start, let's move into the `genome_assembly` directory and consider what data has been provided for today's workshop. First, . Take a look at the directory structure, what data has been provided, and make a new directory for results outputs.
+Before we start, let's move into the `genome_assembly` directory and consider what data has been provided for today's workshop. First, take a look at the directory structure, what data has been provided, and make a new directory for results outputs. Using the `ls -l` command displays the files in a list, with additional information.
 
 ```
 cd ~/obss_2022/genome_assembly/
 ls 
-ls -l data/ # the command ls -l displays the files in a list, with additional information
+ls -l data/ 
 mkdir results/
 ```
 
@@ -54,6 +58,7 @@ mkdir results/
 >> ## Solution
 >> 
 >> The input data is all in FASTQ format, which we have used previously in OBSS sessions.
+>> 
 >> There are two main data types: Illumina (short-read sequencing data) and ONT (Oxford Nanopore Technologies long-read sequencing data). 
 > {: .solution}
 {: .challenge}
@@ -108,24 +113,30 @@ Once FastQC has finished, check your queue to see whether NanoStat is still runn
 
 Now take a look at the results for FastQC and NanoStat, and discuss the overall metrics and quality with your neighbour. How do our short-read and long-read data sets differ from one another? 
 
-## 3.3 K-mers and k-mer profiles
+## 3.3 Genome size estimation and k-mer profiles
 
-A **k-mer** is a substring of length k.  
-
-The maximum number of unique k-mers is given by 4<sup>k</sup>.
-
-The numbers of k-mers contained within a sequence of length L is given by the equation L – K +1, where L is the length of sequence and K is the k-mer length.
-A **k-mer profile** is a histogram in which the counts of the occurrences of each unique k-mer in the dataset are plotted. The x-axis shows the count of k-mer occurrence, often termed **coverage** or **depth**, and the y-axis the number of distinct k-mers which report that coverage/depth value.
+> ## What are k-mers and k-mer profiles?
+>A **k-mer** is a substring of length k.  
+>
+>The maximum number of unique k-mers is given by 4<sup>k</sup>.
+>
+>The numbers of k-mers contained within a sequence of length L is given by the equation L – K +1, where L is the length of sequence and K is the k-mer length.
+>A **k-mer profile** is a histogram in which the counts of the occurrences of each unique k-mer in the dataset are plotted. The x-axis shows the count of k-mer occurrence, often termed **coverage** or **depth**, and the y-axis the number of distinct k-mers which report that coverage/depth value.
+{: .callout}
 
 > ## Exercise
 > 
 > Consider the following 10bp sequence:
+> 
 >   GTAGAGCTGT 
-> Calculate how many 3-mers are there using the equation L - K + 1. What are all the possible 3-mer sequences?
+>   
+> Calculate how many 3-mers there are in this sequence using the equation L - K + 1. What are all the possible 3-mer sequences?
 >
 >> ## Solution
 >> When L = 10 and K = 3: L - K + 1 = 10 - 3 + 1 = 8.
+>> 
 >> There are 8 3-mers in the sequence:
+>> 
 >> 			GTA, TAG, AGA, GAG, AGC, GCT, CTG, TGT
 > {: .solution}
 {: .challenge}
@@ -135,7 +146,8 @@ K-mers have some convenient properties for computational biology: There are a fi
 As we saw earlier, we can calculate G (genome size) using the equation G = T / N. However, at the outset of our analyses, we often only have a value for T. 
 
 We can obtain an estimate of the genome sequence coverage (N) by looking at the k-mer coverage, a property that can be calculated from unassembled reads in the following way:
-			N= (M*L) /(L-K+1)
+	
+  N = (M * L) /(L - K + 1)
 
 	Where: 
 		N = genome sequence coverage
@@ -178,17 +190,37 @@ jellyfish count -C -m 21 -s 1G -t 10 -o kmer_21_illumina_reads.jf ~/obss_2022/ge
 jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
 ```
 
-First, let's look at the SLURM resources. What can you tell about this job?
+> ## Exercise
+> 
+> First, let's look at the SLURM resources. What can you tell about this job?
+>
+> Now let's examine how the script is navigating the directory structure. Where is the job being processed? Are any other paths included in this job?
+>
+>> ## Solution
+>> The job will run for no more than 5 minutes, and will use up to 4 GB memory and 10 CPUs. We have given the job the name `jellyfish` as an identifier. It will run under the account code for OBSS workshop.
+>>
+>> The job is being processed in the directory `~/obss_2022/genome_assembly/results/`. The other path listed in the job is directing jellyfish to the input FASTQ data.
+>>
+>>
+> {: .solution}
+{: .challenge}
 
-Now let's look at how we are navigating our directory structure. Where is the job being processed? Are any other paths included in this job?
+
+
 
 Then let's look at the commands we'll be passing to Jellyfish. There are two steps to this process:
   1. Jellyfish counts the k-mers
   2. Jellyfish computes the histogram of these counts. 
 
-As you can see, there are a number of different parameters used, denoted by `-`. A key part of bioinformatics is building familiarity with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
+As you can see, there are a number of different parameters used, denoted by `-`. A key part of bioinformatics is building familiarity with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. 
 
-{% comment %} https://github.com/gmarcais/Jellyfish - Usage link - discuss how manuals are essential to understand underlying algorithms, and the various parameters in the processes. {% endcomment %} 
+> ## Exercise
+> 
+> If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
+>> ## Solution
+>> By googling 'jellyfish genome k-mers', you should be able to find the manual at <https://github.com/gmarcais/Jellyfish>. 
+> {: .solution}
+{: .challenge}
 
 Let's save our `jellyfish.sl` file, and run it.
 
