@@ -145,7 +145,7 @@ K-mers have some convenient properties for computational biology: There are a fi
 
 > ## A typical k-mer profile
 >
-> <img src="../fig/Whibley-k-mer-profiles1.jpg">
+> <img width="115%" src="../fig/Whibley-k-mer-profiles1.jpg">
 {: .callout}
 
 As we saw earlier, we can calculate G (genome size) using the equation G = T / N. However, at the outset of our analyses, we often only have a value for T. 
@@ -253,12 +253,12 @@ K-mer analyses can become more difficult in heterozygous diploid samples (and ev
 
 The example below is for a pear genome. The profile left hand peak has a coverage of 0.5x the right hand peak. K-mers under the right peak are those sequences that are shared between both alleles at a locus, whereas sequence variants will change the identity of the k-mers that overlap these variants.
 
-<img src="../fig/Whibley-k-mer-profiles2.jpg">
+<img src="../fig/Whibley-k-mer-profiles2.png">
 
 > ## Exercise
 > The figure below is reproduced from Stevens et al. (2018; G3: GENES, GENOMES, GENETICS, 8:7, 2153-2165 <https://doi.org/10.1534/g3.118.200030>). The authors present k-mer profiles for six different walnut (Juglans) species.
 > 
-> <img src="../fig/Whibley-k-mer-profiles3.jpg">
+> <img width="75%"src="../fig/Whibley-k-mer-profiles3.jpg">
 > 
 > Which of the species is (i) the most heterozygous and (ii) the least heterozygous? 
 > 
