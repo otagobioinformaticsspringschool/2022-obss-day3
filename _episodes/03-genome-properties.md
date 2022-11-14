@@ -260,6 +260,13 @@ The example below is for a pear genome. The profile left hand peak has a coverag
 > 
 > <img width="75%" src="../fig/Whibley-k-mer-profiles3.jpg">
 > 
+> **Key** 
+> 
+> |J. nigra |	Dashed blue	| P. stenoptera	| Solid blue |
+> |J. sigillata |	Orange	| J. hindsii	| Green |
+> |J. microcarpa |	Solid grey | 	J. regia | Dashed grey |
+> |J. cathayensis |	Yellow | | | 		
+>
 > Which of the species is (i) the most heterozygous and (ii) the least heterozygous? 
 > 
 >> ## Solution
