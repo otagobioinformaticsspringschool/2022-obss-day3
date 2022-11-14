@@ -1,7 +1,7 @@
 ---
 title: "Exploring input data and genome characteristics"
-teaching: 0
-exercises: 0
+teaching: 40
+exercises: 40
 questions:
 - "How do the characteristics of short-read and long-read datasets differ?"
 - "What underlying characteristics of a genome may complicate genome assembly?"
