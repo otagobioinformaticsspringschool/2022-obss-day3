@@ -1,7 +1,7 @@
 ---
 title: "Using the slurm scheduler"
-teaching: 0
-exercises: 0
+teaching: 10
+exercises: 10
 questions:
 - "Key question (FIXME)"
 objectives:
