@@ -137,11 +137,16 @@ Now take a look at the results for FastQC and NanoStat, and discuss the overall 
 >> 
 >> There are 8 3-mers in the sequence:
 >> 
->> 			GTA, TAG, AGA, GAG, AGC, GCT, CTG, TGT
+>>  GTA, TAG, AGA, GAG, AGC, GCT, CTG, TGT
 > {: .solution}
 {: .challenge}
 
 K-mers have some convenient properties for computational biology: There are a finite number of distinct k-mers and the counting of these can be based on unambiguous matching. K-mer profiles for genome property estimation are usually 17-31 bases long. As k-mer length increases the likelihood of it occurring uniquely in your genome increases, but so does the chance that it will overlap a sequence error. Although 4<sup>k</sup> quickly becomes very large as k increases, the proportion of the total possible number of unique k-mers that are actually present in a genome decreases.
+
+> ## A typical k-mer profile
+>
+> <img src="../fig/Whibley-k-mer-profiles1.jpg">
+{: .callout}
 
 As we saw earlier, we can calculate G (genome size) using the equation G = T / N. However, at the outset of our analyses, we often only have a value for T. 
 
@@ -157,7 +162,7 @@ We can obtain an estimate of the genome sequence coverage (N) by looking at the 
 
 By estimating N in this way, we can combine it with our knowledge of T to obtain an estimate of G.
 
-This approach to genome size estimation was proposed in the Giant Panda genome project, a landmark paper as it describes the first genome assembly to be generated from only short read Illumina sequencing (Li R, Fan W, Tian G, et al. 2010. The sequence and de novo assembly of the giant panda genome Nature. doi:10.1038/nature08696). 
+This approach to genome size estimation was proposed in the Giant Panda genome project, a landmark paper as it describes the first genome assembly to be generated from only short read Illumina sequencing (Li R, Fan W, Tian G, et al. 2010. The sequence and de novo assembly of the giant panda genome. *Nature*. <doi:10.1038/nature08696>). 
 
 We are going to use our processed Illumina short-read data to count k-mers that can be used to explore some characteristics of the sequenced genome, using a program called Jellyfish with our short-read data. Let's navigate back to our `scripts` directory, and create a new script.
 
@@ -205,9 +210,6 @@ jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
 > {: .solution}
 {: .challenge}
 
-
-
-
 Then let's look at the commands we'll be passing to Jellyfish. There are two steps to this process:
   1. Jellyfish counts the k-mers
   2. Jellyfish computes the histogram of these counts. 
@@ -244,3 +246,26 @@ ls ../results/
 To visualise the results of k-mer analysis, import your `.histo` file produced by Jellyfish into the [GenomeScope](http://qb.cshl.edu/genomescope/) webtool. Note: The input reads were produced from 150 bp Illumina sequencing.
 
 What can you tell from these results, and how do your results compare to the examples at <https://www.nature.com/articles/s41467-020-14998-3/figures/1>?
+
+## 3.4 Heterozygosity and k-mers
+
+K-mer analyses can become more difficult in heterozygous diploid samples (and even more so for polyploids!). The challenge here is in correctly partitioning the k-mers that are derived from heterozygous and repetitive components of the genome. There are tools, such as GenomeScope <http://qb.cshl.edu/genomescope>, that model these different components of the profile and estimate genome properties.  
+
+The example below is for a pear genome. The profile left hand peak has a coverage of 0.5x the right hand peak. K-mers under the right peak are those sequences that are shared between both alleles at a locus, whereas sequence variants will change the identity of the k-mers that overlap these variants.
+
+<img src="../fig/Whibley-k-mer-profiles2.jpg">
+
+> ## Exercise
+> The figure below is reproduced from Stevens et al. (2018; G3: GENES, GENOMES, GENETICS, 8:7, 2153-2165 <https://doi.org/10.1534/g3.118.200030>). The authors present k-mer profiles for six different walnut (Juglans) species.
+> 
+> <img src="../fig/Whibley-k-mer-profiles3.jpg">
+> 
+> Which of the species is (i) the most heterozygous and (ii) the least heterozygous? 
+> 
+>> ## Solution
+>> i)	P stenoptera, ii)	J hindsii (based on the relative proportion in diploid vs haploid peaks).
+> {: .solution}
+{: .challenge}
+
+
+Question 4: Which of the species is (i) the most heterozygous and (ii) the least heterozygous ? 
