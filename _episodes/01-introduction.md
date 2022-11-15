@@ -29,8 +29,8 @@ As genome sequencing and bioinformatic tools and technologies have rapidly devel
 While genome assembly typically consists of a straightforward series of processes, it requires many choices at each step in the process. These choices include: sequencing type, sequence coverage depth, trimming and filtering parameters, genome assembly program, and downstream steps including polishing, scaffolding, and more. Many of these choices will be determined in part by the biological characteristics of the focal species and the target application(s) for the genome assembly.
 
 <figure>
-<img src="../fig/whibley-et-al-assembly-process.jpg" style="width:55%">
-<figcaption align = "center"><b>A typical genome assembly workflow. Whibley et al. 2021, Molecular Ecology Resources, https://doi.org/10.1111/1755-0998.13312.</b></figcaption>
+<img src="../fig/whibley-et-al-assembly-process.jpg" style="width:auto;height:auto;max-width:55%;" >
+<figcaption align = "center"><b>A typical genome assembly workflow. Whibley et al. 2021, Molecular Ecology Resources, <a href="https://doi.org/10.1111/1755-0998.13312">https://doi.org/10.1111/1755-0998.13312</a>.</b></figcaption>
 </figure>
 
 
