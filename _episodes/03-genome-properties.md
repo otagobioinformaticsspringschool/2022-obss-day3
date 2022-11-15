@@ -145,20 +145,23 @@ K-mers have some convenient properties for computational biology: There are a fi
 
 > ## A typical k-mer profile
 >
-> <img width="115%" src="../fig/Whibley-k-mer-profiles1.jpg">
+> <img src="../fig/Whibley-k-mer-profiles1.jpg" width="115%">
 {: .callout}
 
 As we saw earlier, we can calculate G (genome size) using the equation G = T / N. However, at the outset of our analyses, we often only have a value for T. 
 
 We can obtain an estimate of the genome sequence coverage (N) by looking at the k-mer coverage, a property that can be calculated from unassembled reads in the following way:
 	
-  N = (M * L) /(L - K + 1)
+$$  
+N = \frac{M * L}{L - K + 1}
+$$
 
-	Where: 
-		N = genome sequence coverage
-		M = the k-mer coverage (the peak of coverage on the k-mer profile plot)
-		L = read length
-		K = k-mer length
+Where:
+- N = genome sequence coverage  
+-	M = the k-mer coverage (the peak of coverage on the k-mer profile plot)  
+-	L = read length  
+-	K = k-mer length  
+
 
 By estimating N in this way, we can combine it with our knowledge of T to obtain an estimate of G.
 
@@ -196,7 +199,8 @@ jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
 ```
 
 > ## Exercise
-> 
+> ### **Question 1**
+>
 > First, let's look at the SLURM resources. What can you tell about this job?
 >
 > Now let's examine how the script is navigating the directory structure. Where is the job being processed? Are any other paths included in this job?
@@ -208,15 +212,15 @@ jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
 >>
 >>
 > {: .solution}
-{: .challenge}
-
-Then let's look at the commands we'll be passing to Jellyfish. There are two steps to this process:
-  1. Jellyfish counts the k-mers
-  2. Jellyfish computes the histogram of these counts. 
-
-As you can see, there are a number of different parameters used, denoted by `-`. A key part of bioinformatics is building familiarity with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. 
-
-> ## Exercise
+>
+>
+>Then let's look at the commands we'll be passing to Jellyfish. There are two steps to this process:
+>  1. Jellyfish counts the k-mers
+>  2. Jellyfish computes the histogram of these counts. 
+>
+> As you can see, there are a number of different parameters used, denoted by `-`. A key part of bioinformatics is building familiarity with program manuals. These are often but not always hosted on GitHub, and provide information about program installation and usage. 
+>
+> ### **Question 2**
 > 
 > If we know that Jellyfish is used to count k-mers, can you use Google to find the manual?
 >> ## Solution
