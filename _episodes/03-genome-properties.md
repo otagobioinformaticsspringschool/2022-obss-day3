@@ -165,7 +165,7 @@ Where:
 
 By estimating N in this way, we can combine it with our knowledge of T to obtain an estimate of G.
 
-This approach to genome size estimation was proposed in the Giant Panda genome project, a landmark paper as it describes the first genome assembly to be generated from only short read Illumina sequencing (Li R, Fan W, Tian G, et al. 2010. The sequence and de novo assembly of the giant panda genome. *Nature*. <doi:10.1038/nature08696>). 
+This approach to genome size estimation was proposed in the Giant Panda genome project, a landmark paper as it describes the first genome assembly to be generated from only short read Illumina sequencing (Li R, Fan W, Tian G, et al. 2010. The sequence and de novo assembly of the giant panda genome. *Nature*. [doi:10.1038/nature08696](https://doi.org/10.1038/nature08696)). 
 
 We are going to use our processed Illumina short-read data to count k-mers that can be used to explore some characteristics of the sequenced genome, using a program called Jellyfish with our short-read data. Let's navigate back to our `scripts` directory, and create a new script.
 
@@ -253,14 +253,14 @@ What can you tell from these results, and how do your results compare to the exa
 
 ## 3.4 Heterozygosity and k-mers
 
-K-mer analyses can become more difficult in heterozygous diploid samples (and even more so for polyploids!). The challenge here is in correctly partitioning the k-mers that are derived from heterozygous and repetitive components of the genome. There are tools, such as GenomeScope <http://qb.cshl.edu/genomescope>, that model these different components of the profile and estimate genome properties.  
+K-mer analyses can become more difficult in heterozygous diploid samples (and even more so for polyploids!). The challenge here is in correctly partitioning the k-mers that are derived from heterozygous and repetitive components of the genome. There are tools, such as [GenomeScope](http://qb.cshl.edu/genomescope/), that model these different components of the profile and estimate genome properties.  
 
 The example below is for a pear genome. The profile left hand peak has a coverage of 0.5x the right hand peak. K-mers under the right peak are those sequences that are shared between both alleles at a locus, whereas sequence variants will change the identity of the k-mers that overlap these variants.
 
 <img src="../fig/Whibley-k-mer-profiles2.png">
 
 > ## Exercise
-> The figure below is reproduced from Stevens et al. (2018; G3: GENES, GENOMES, GENETICS, 8:7, 2153-2165 <https://doi.org/10.1534/g3.118.200030>). The authors present k-mer profiles for six different walnut (Juglans) species.
+> The figure below is reproduced from Stevens et al. (2018; *G3: Genes, Genomes, Genetics*; 8:7, <https://doi.org/10.1534/g3.118.200030>). The authors present k-mer profiles for six different walnut (Juglans) species.
 > 
 > <img width="75%" src="../fig/Whibley-k-mer-profiles3.jpg">
 > 
