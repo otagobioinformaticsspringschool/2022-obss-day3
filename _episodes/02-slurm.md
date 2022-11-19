@@ -3,23 +3,19 @@ title: "Using the slurm scheduler"
 teaching: 10
 exercises: 10
 questions:
-- "Key question (FIXME)"
+- "How to submit jobs to an HPC scheduler"
 objectives:
-- "First learning objective. (FIXME)"
+- "Submit a job to the SLURM scheduler."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "The SLURM scheduler faciliates the fair distribution of compute resource amongst users."
 ---
-FIXME
+
 
 {% include links.md %}
 
 
-- resources
-- quotas
-- queues
-- sbatch
 
-Derived from https://support.nesi.org.nz/hc/en-gb/articles/360000684396-Submitting-your-first-job
+Derived from [https://support.nesi.org.nz/hc/en-gb/articles/360000684396-Submitting-your-first-job](https://support.nesi.org.nz/hc/en-gb/articles/360000684396-Submitting-your-first-job)
 
 
 ## Shared resources and schedulers
