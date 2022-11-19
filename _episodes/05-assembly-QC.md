@@ -91,31 +91,88 @@ busco  -i flye_raw_*/assembly.fasta -c 10 -o flye_raw_assembly_busco -m genome -
 
 Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be broken.
 
+To investigate coverage, we will take our input Nanopore data and map this to the genome assembly using `bwa mem`. We will then use `bedtools` to calculate mean coverage across genomic 'windows' - regions with a pre-determined size.
+
+First, let's make a new output directory for the results of this process.
 
 ```
-PLACEHOLDER MAPPING SCRIPT - TO BE TESTED & SLURMIFIED
+mkdir ~/obss_2022/genome_assembly/results/coverage/ 
+```
 
-# Create a genome file (this has two columns: chromosome name and chromosome length) 
-samtools faidx assembly.fasta
-
-awk '{print $1 "\t", $2} assembly.fasta.fai > genome.txt
-
-# Make a bedfile with window size and step size defined  
-bedtools makewindows -g genome.txt  -w 10000 -s 5000 > genomic_10kb_intervals.bed
-
-# Run samtools depth to obtain read counts at every position
-samtools depth  sorted.alignment.bam > coverage.out
-
-# Convert coverage file to BED format
-awk '{print $1"\t"$2"\t"$2+1"\t"$3} coverage.out > coverage.bed
-
-# Calculate mean coverage within each genomic window
-# Genome file is optional here, including it gives control over order of scaffolds in output.
-bedtools map -a  genomic_10kb_intervals.bed -b coverage.bed-c 4 -o mean -g genome.txt > 10kb_window_5kb_step_coverage.txt
-
-## THEN PLOT - with R.
+Mapping long reads to the genome assembly requires a little more resource than when you were mapping short reads yesterday, so we will use a SLURM script for this step. Note that we are specifying a BWA mapping algorithm, `ont2d`, that takes into account the slightly higher error rate expected for our Nanopore reads compared with Illumina short-read data.
 
 ```
+#!/bin/bash -e
+
+#SBATCH --job-name=mapping
+#SBATCH --account=nesi02659
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+#SBATCH --time=01:00:00
+#SBATCH --mem=4G
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+
+module purge
+module load BWA/0.7.17-gimkl-2017a SAMtools/1.15.1-GCC-11.3.0
+
+DATA=~/obss_2022/genome_assembly/data/
+OUTDIR=~/obss_2022/genome_assembly/results/coverage/
+
+cd ~/obss_2022/genome_assembly/results/flye_raw_*/
+
+echo "making bwa index"
+bwa index assembly.fasta
+
+echo "mapping ONT reads"
+bwa mem -x ont2d -t 4 assembly.fasta ${DATA}all_trimmed_ont_A.fastq | samtools view -S -b - > ${OUTDIR}mapped-A.bam
+
+echo "sorting mapping output"
+samtools sort -o ${OUTDIR}mapped-A.sorted.bam ${OUTDIR}mapped-A.bam
+
+echo "getting depth"
+samtools depth ${OUTDIR}mapped-A.sorted.bam > ${OUTDIR}coverage.out
+```
+
+While our data is mapping, we can prepare the genomic windows using `BEDTools`. First, let's load the BEDTools module.
+
+```
+module load BEDTools/2.30.0-GCC-11.3.0
+```
+
+Now we want to gather information about the length of the contigs in the genome assembly. To do this, we can use `SAMtools` to index the genome. The index file produced contains the information we need to pass to BEDTools. 
+
+```
+samtools faidx ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta
+```
+
+Now we will generate the genomic windows that we will calculate mean coverage across. We are going to set each window to 10 kb, making 5 kb steps before starting a new window. 
+
+```
+bedtools makewindows -g assembly.fasta.fai -w 10000 -s 5000 > genomic_10kb_intervals.bed
+```
+
+Once our script has finished running, we can then continue the process to get the mean coverage across the genome assembly.
+
+We will extract data from the `coverage.out` file produced by `samtools depth`.
+
+```
+awk '{print $1"\t"$2"\t"$2+1"\t"$3}' coverage.out > coverage.bed
+```
+
+We can then use BEDTools to do a function that calculates the mean coverage within each of the predefined windows. 
+
+```
+bedtools map -a genomic_10kb_intervals.bed -b coverage.bed -c 4 -o mean -g genome.txt > 10kb_window_5kb_step_coverage.txt
+```
+
+We will then plot this `10kb_window_5kb_step_coverage.txt` file using R.
+
+```
+SCRIPT TO ADD
+```
+
+## 04. Summary
 
 So now we have an idea of our assembly characteristics. It can be useful to compare these metrics against those for other closely related taxa in the published literature. Like genome size, there may be some genome characteristics that are inherent to a taxon. For example, birds have highly conserved genomes, so we expect all bird genome assemblies to be around 1-1.5 Gb, and to see a particular skew to the AT:GC ratios. 
 
