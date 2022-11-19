@@ -48,7 +48,7 @@ As you can see from the SLURM resources, we expect this job to take around 2 hrs
 
 ## 4.3 Later...
 
-<img src="../fig/2hrs-later-dna.png">
+<img width="55%" src="../fig/2hrs-later-dna.png">
 
 > ## Exercise
 > First, let's check out `.err` and `.out` logs for Flye. Were there any issues? What can you tell about the process? What can you tell about the genome assembly? 
