@@ -31,7 +31,7 @@ We will first perform polishing using the Nanopore data itself, using the progra
 #SBATCH --mem=12G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --gpus-per-node=1
+#SBATCH --gpus-per-node A100:1
 
 module purge
 module load medaka/1.6.0-Miniconda3-4.12.0
