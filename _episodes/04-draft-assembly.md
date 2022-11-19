@@ -14,9 +14,9 @@ keypoints:
 
 ## 4.1 Genome assembly options
 
-There are a huge range of genome assembly tools available. Many assemblers are designed for specific data types (e.g., short- vs long-reads). It is important to select an assembler that is appropriate to the data type(s) and characteristics of the focal genome. Reading assembler manuals and associated articles can be really helpful to understand the strengths and weaknesses of the underlying algorithms implemented by the assembly program.
+A wide (and continually expanding) range of genome assembly tools are available. Many assemblers are designed for specific data types (e.g., short- vs long-reads, Nanopore vs PacBio data). It is important to select an assembler that is appropriate to the data type(s) and characteristics of the focal genome. Becoming familiar with genome assembly manuals and associated research can be helpful in understanding the strengths and weaknesses of the underlying algorithms implemented by the various assembly program.
 
-[FIG TO INCLUDE]
+<img src="../fig/genome-asm-options.png">
 
 ## 4.2 Assembling a genome
 
@@ -47,7 +47,8 @@ flye --nano-raw ~/obss_2022/genome_assembly/data/all_trimmed_ont_*.fastq --out-d
 As you can see from the SLURM resources, we expect this job to take around 2 hrs to run, so let's check back later.
 
 ## 4.3 Later...
-{% comment %} I suppose the Spongebob '2 hrs later' image can't be used due to copyright...? {% endcomment %}
+
+<img src="../fig/2hrs-later-dna.png">
 
 > ## Exercise
 > First, let's check out `.err` and `.out` logs for Flye. Were there any issues? What can you tell about the process? What can you tell about the genome assembly? 
