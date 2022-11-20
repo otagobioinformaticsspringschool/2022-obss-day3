@@ -115,4 +115,15 @@ java -Xmx16G -jar $EBROOTPILON/pilon.jar \
 
 Use `assemblathon_stats.pl` to investigate how polishing has impacted the basic assembly metrics. We can also modify our `BUSCO.sl` script to compare the gene completeness of this polished version of the assembly with our original draft. To do this, change the input directory and assembly filename to the Pilon output, and change the BUSCO output filename.
 
-For both long- and short-read polishing, you may find that multiple rounds of polishing continue to produce improvements in the assembly metrics.
+For both long- and short-read polishing, you may find a genome assembly can benefit from multiple rounds of polishing, with continued improvements in the assembly metrics.
+
+## 6.3 Downstream processes
+
+Today we have produced a fungal draft genome assembly. You can see that there are a number of steps in the process, and that many choices must be made along the way, based on input data types, genome characteristics of the focal organism, and the quality of the assembly produced. 
+
+While we've done a lot of work to get to produce this draft assembly, there is still more that can be done before a genome is published or used for downstream research. Take a look at the detailed workflow below. Which steps did we complete today? How many more steps could we work through? A lot of work goes into producing a high-quality genome assembly! 
+
+<figure>
+<img src="../fig/GenomeAssemblyAndAnnotationWorkflow.pcbi.1008325.g001.png">
+<figcaption align = "center"><b>A detailed workflow describing the processes and decision-making in a genome assembly workflow. Note the additional complexity compared with the visualisation in the Introduction. Jung et al. 2020, PLoS Computation Biology, <a href="https://doi.org/10.1111/1755-0998.13312">https://doi.org/10.1111/1755-0998.13312</a>.</b></figcaption>
+</figure>
