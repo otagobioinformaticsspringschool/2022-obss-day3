@@ -83,7 +83,7 @@ Copy the script below into the new file. Here you want to assess only the datase
 #SBATCH --job-name=nanostat
 #SBATCH --output=%x.%j.out
 #SBATCH --error=%x.%j.err
-#SBATCH --time=12:00
+#SBATCH --time=15:00
 #SBATCH --mem=1G
 
 module purge
