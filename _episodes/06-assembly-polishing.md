@@ -8,6 +8,7 @@ objectives:
 - "Polish draft genome assembly using Nanopore long-reads and Illumina short-reads to correct errors."
 keypoints:
 - "Multiple rounds of polishing using different data sets can improve the accuracy of a genome assembly, and is particularly important when assemblies are produced using Nanopore data."
+- "We have done a lot of work to get our genome assembly to this stage, but there are a number of downstream processes that can be done that can further improve the assembly and make it more useful for biological research."
 ---
 
 {% include links.md %}
