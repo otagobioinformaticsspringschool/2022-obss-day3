@@ -3,11 +3,11 @@ title: "Assembly polishing and post-processing"
 teaching: 20
 exercises: 40
 questions:
-- "Key question (FIXME)"
+- "How can we improve a draft assembly to make it more correct and accurate?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Polish draft genome assembly using Nanopore long-reads and Illumina short-reads to correct errors."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "Multiple rounds of polishing using different data sets can improve the accuracy of a genome assembly, and is particularly important when assemblies are produced using Nanopore data."
 ---
 
 {% include links.md %}
@@ -116,8 +116,3 @@ java -Xmx16G -jar $EBROOTPILON/pilon.jar \
 Use `assemblathon_stats.pl` to investigate how polishing has impacted the basic assembly metrics. We can also modify our `BUSCO.sl` script to compare the gene completeness of this polished version of the assembly with our original draft. To do this, change the input directory and assembly filename to the Pilon output, and change the BUSCO output filename.
 
 For both long- and short-read polishing, you may find that multiple rounds of polishing continue to produce improvements in the assembly metrics.
-
-## 6.3 Annotation
-
-[Nat to add info, FUNannotate script, Joseph running analysis to add as an example in resources/ dir]
-
