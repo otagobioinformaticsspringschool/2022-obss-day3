@@ -125,5 +125,5 @@ While we've done a lot of work to get to produce this draft assembly, there is s
 
 <figure>
 <img src="../fig/GenomeAssemblyAndAnnotationWorkflow.pcbi.1008325.g001.png">
-<figcaption align = "center"><b>A detailed workflow describing the processes and decision-making in a genome assembly workflow. Note the additional complexity compared with the visualisation in the Introduction. Jung et al. 2020, PLoS Computation Biology, <a href="https://doi.org/10.1111/1755-0998.13312">[https://doi.org/10.1111/1755-0998.13312](https://doi.org/10.1371/journal.pcbi.1008325)</a>.</b></figcaption>
+<figcaption align = "center"><b>A detailed workflow describing the processes and decision-making in a genome assembly workflow. Note the additional complexity compared with the visualisation in the Introduction. Jung et al. 2020, PLoS Computation Biology, <a href="https://doi.org/10.1371/journal.pcbi.1008325a">https://doi.org/10.1371/journal.pcbi.1008325a>.</b></figcaption>
 </figure>
