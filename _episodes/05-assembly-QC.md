@@ -125,7 +125,7 @@ echo "making bwa index"
 bwa index assembly.fasta
 
 echo "mapping ONT reads"
-bwa mem -x ont2d -t 4 assembly.fasta ${DATA}all_trimmed_ont_A.fastq | samtools view -S -b - > ${OUTDIR}mapped-A.bam
+bwa mem -x ont2d -t 4 assembly.fasta ${DATA}all_trimmed_ont_A.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped-A.bam
 
 echo "sorting mapping output"
 samtools sort -o ${OUTDIR}mapped-A.sorted.bam ${OUTDIR}mapped-A.bam

@@ -92,7 +92,7 @@ module load NanoStat
 cd ~/obss_2022/genome_assembly/data/
 
 # replace * with one of A-E
-NanoStat --fastq all_trimmed_ont_*.fastq -t1 > ~/obss_2022/genome_assembly/results/Nanostat_all_trimmed_ont_*
+NanoStat --fastq all_trimmed_ont_*.fastq.gz -t1 > ~/obss_2022/genome_assembly/results/Nanostat_all_trimmed_ont_*
 ```
 
 One benefit of using NeSI is that many commonly-used programs are pre-installed via modules. We use `module purge` to clear the module space before loading the modules we need for the job using the `module load` command. 
@@ -106,7 +106,7 @@ module load FastQC
 
 cd results/
 
-fastqc ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq
+fastqc ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq.gz
 ```
 
 Once FastQC has finished, check your queue to see whether NanoStat is still running, using `squeue -u <nesi.id>`. If it's finished, use `less` to check your `.err` and `.out` logs in the `scripts` directory for any issues.
@@ -120,7 +120,7 @@ Now take a look at the results for FastQC and NanoStat, and discuss the overall 
 >
 >The maximum number of unique k-mers is given by 4<sup>k</sup>.
 >
->The numbers of k-mers contained within a sequence of length L is given by the equation L – K +1, where L is the length of sequence and K is the k-mer length.
+>The numbers of k-mers contained within a sequence of length L is given by the equation L – K + 1, where L is the length of sequence and K is the k-mer length.
 >A **k-mer profile** is a histogram in which the counts of the occurrences of each unique k-mer in the dataset are plotted. The x-axis shows the count of k-mer occurrence, often termed **coverage** or **depth**, and the y-axis the number of distinct k-mers which report that coverage/depth value.
 {: .callout}
 
@@ -192,7 +192,7 @@ module load Jellyfish/2.3.0-gimkl-2020a
 cd ~/obss_2022/genome_assembly/results/
 
 # count 21-mers from read dataset
-jellyfish count -C -m 21 -s 1G -t 10 -o kmer_21_illumina_reads.jf ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq
+jellyfish count -C -m 21 -s 1G -t 10 -o kmer_21_illumina_reads.jf ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq.gz
 
 # generate histogram of kmer counts
 jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
