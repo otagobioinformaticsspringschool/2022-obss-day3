@@ -24,9 +24,17 @@ Today we will be using [Flye](https://github.com/fenderglass/Flye), an assembler
 
 Although genome assembly algorithms are complex, using an assembler is typically very straightforward. 
 
-We will be making a series of scripts today to run different processes. Let's use `cd scripts` to move into our scripts directory so we can keep things tidy. Now we'll make our first script to assemble a genome. 
+We will be making a series of scripts today to run different processes. Let's set up our directory structure so we can keep things tidy. We will store all our scripts in the `scripts` directory. We also need to make a `results` directory to put the outputs we will generate.
 
-To make a script, we use a text editor called `nano`. Run `nano flye.sl` to open a new file with nano. Now copy in the contents below: 
+```
+cd ~/obss_2022/genome_assembly/
+mkdir results/
+cd scripts/
+```
+
+Using `ls` we can see that there are already some files in this directory. Take a look in your `data` directory to see what input data you have been given. 
+
+Now we will make our first script that will assemble a genome. To make a script, we will use a text editor called `nano`. Use the command `nano flye.sl` to open a new file called 'flye.sh' with nano. Now copy in the contents below: 
 
 ```
 #!/bin/bash -e
