@@ -3,11 +3,12 @@ title: "Assembly polishing and post-processing"
 teaching: 20
 exercises: 40
 questions:
-- "Key question (FIXME)"
+- "How can we improve a draft assembly to make it more correct and accurate?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Polish draft genome assembly using Nanopore long-reads and Illumina short-reads to correct errors."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "Multiple rounds of polishing using different data sets can improve the accuracy of a genome assembly, and is particularly important when assemblies are produced using Nanopore data."
+- "We have done a lot of work to get our genome assembly to this stage, but there are a number of downstream processes that can be done that can further improve the assembly and make it more useful for biological research."
 ---
 
 {% include links.md %}
@@ -115,9 +116,15 @@ java -Xmx16G -jar $EBROOTPILON/pilon.jar \
 
 Use `assemblathon_stats.pl` to investigate how polishing has impacted the basic assembly metrics. We can also modify our `BUSCO.sl` script to compare the gene completeness of this polished version of the assembly with our original draft. To do this, change the input directory and assembly filename to the Pilon output, and change the BUSCO output filename.
 
-For both long- and short-read polishing, you may find that multiple rounds of polishing continue to produce improvements in the assembly metrics.
+For both long- and short-read polishing, you may find a genome assembly can benefit from multiple rounds of polishing, with continued improvements in the assembly metrics.
 
-## 6.3 Annotation
+## 6.3 Downstream processes
 
-[Nat to add info, FUNannotate script, Joseph running analysis to add as an example in resources/ dir]
+Today we have produced a fungal draft genome assembly. You can see that there are a number of steps in the process, and that many choices must be made along the way, based on input data types, genome characteristics of the focal organism, and the quality of the assembly produced. 
 
+While we've done a lot of work to get to produce this draft assembly, there is still more that can be done before a genome is published or used for downstream research. Take a look at the detailed workflow below. Which steps did we complete today? How many more steps could we work through? A lot of work goes into producing a high-quality genome assembly! 
+
+<figure>
+<img src="../fig/GenomeAssemblyAndAnnotationWorkflow.pcbi.1008325.g001.png">
+<figcaption align = "center"><b>A detailed workflow describing the processes and decision-making in a genome assembly workflow. Note the additional complexity compared with the visualisation in the Introduction. Jung et al. 2020, PLoS Computation Biology, <a href="https://doi.org/10.1371/journal.pcbi.1008325a">https://doi.org/10.1371/journal.pcbi.1008325</a>.</b></figcaption>
+</figure>
