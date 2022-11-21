@@ -22,7 +22,11 @@ A wide (and continually expanding) range of genome assembly tools are available.
 
 Today we will be using [Flye](https://github.com/fenderglass/Flye), an assembler designed to work with long-read data. Flye has modes for Nanopore and PacBio long-read data, that take into account the characteristics specific to each data type. We will use the `--nano-raw` mode to pass just our Nanopore data (labelled 'ont'). 
 
-Although genome assembly algorithms are complex, using an assembler is typically very straightforward. Let's make the script `flye.sl`, containing the content below.
+Although genome assembly algorithms are complex, using an assembler is typically very straightforward. 
+
+We will be making a series of scripts today to run different processes. Let's use `cd scripts` to move into our scripts directory so we can keep things tidy. Now we'll make our first script to assemble a genome. 
+
+To make a script, we use a text editor called `nano`. Run `nano flye.sl` to open a new file with nano. Now copy in the contents below: 
 
 ```
 #!/bin/bash -e
