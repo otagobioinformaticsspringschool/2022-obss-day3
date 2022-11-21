@@ -48,6 +48,10 @@ module load Flye/2.9.1-gimkl-2022a-Python-3.10.5
 flye --nano-raw ~/obss_2022/genome_assembly/data/all_trimmed_ont_*.fastq.gz --out-dir ~/obss_2022/genome_assembly/results/flye_raw_* -t 24
 ```
 
+You may have noticed that in our `data/` directory, there is more than one .fastq.gz file. We are going to be working in groups today. The letter you are assigned corresponds to one of these data files, so you need to replace the two wildcards in the script above with the letter your group is assigned.
+
+Now let's save our new script and exit, using Ctrl+X. We have already named it `flye.sh` when we opened nano, so hit `Y`, and nano will save this and close. Check the contents of your `scripts` directory, and you should see this file.
+
 As you can see from the SLURM resources, we expect this job to take around 2 hrs to run, so let's check back later.
 
 ## 4.3 Later...
