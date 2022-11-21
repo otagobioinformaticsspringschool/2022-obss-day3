@@ -41,8 +41,8 @@ Now we will make our first script that will assemble a genome. To make a script,
 
 #SBATCH --job-name=FLYE
 #SBATCH --account=nesi02659
-#SBATCH --output=%x.%j.flye.out
-#SBATCH --error=%x.%j.flye.err
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
 #SBATCH --time=2:00:00
 #SBATCH --mem=70G
 #SBATCH --ntasks=1
