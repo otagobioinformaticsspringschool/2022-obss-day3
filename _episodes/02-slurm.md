@@ -76,7 +76,7 @@ You can find more details on its use on the [Slurm Documentation](https://slurm.
 
 Often, bioformatics software has the option to use more CPUs or threads to make the processing go faster. In the case of SLURM, CPUs are a resource that need to be requested of if you are trying to use more than one.
 
-Depending on the software, this is usually done using `#SBATCH --cpus-per-task=N`, where N is the number of CPUs you wish to use. You then can reference this number in your actual command using the variable `SLURM_CPUS_PER_TASK`. It's a good idea to refer to this variable in your command so that if you increase or decrease the number of CPU cores from slurm this gets reflected in the command too.
+Depending on the software, this is usually done using `#SBATCH --cpus-per-task=N`, where N is the number of CPUs you wish to use. You then can reference this number in your actual command using the variable `SLURM_CPUS_PER_TASK`. It's a good idea to refer to this variable in your command so that if you increase or decrease the number of CPU cores from slurm this gets reflected in the command too. Usually bioinformatics programs that can make use of extra cpu cores will have a `--threads` (or similar) argument.
 
 ~~~
 #!/bin/bash -e
