@@ -89,7 +89,7 @@ busco  -i flye_raw_*/assembly.fasta -c 10 -o flye_raw_assembly_busco -m genome -
 
 ## 03. Plotting coverage
 
-Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be broken.
+Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be corrected.
 
 To investigate coverage, we will take our input Illumina data and map this to the genome assembly using `bwa mem`. We will then use `bedtools` to calculate mean coverage across genomic 'windows' - regions with a pre-determined size. 
 
@@ -211,13 +211,11 @@ coverage<-rename(coverage,c(V1="contig", V2="startPos", V3="endPos",V4="meanDept
 head(coverage)
 ```
 
-
-
 To start with, we just want to look at the coverage across one contig. Each contig will have the same starting position (at 1), but the contigs are all different lengths. If we tried to plot the coverage for all the contigs in one plot, it would be messy and difficult to interpret. 
 
 <figure>
-<img src="../fig/example-coverage-all-contigs.png">
-<figcaption align = "center"><b>A coverage plot of all of the contigs in the genome assembly producing using Dataset D. Position on the contig is on the x-axis, and mean coverage depth on the y-axis. Each contig is assigned a different colour. As the contigs start at position 1 but are all different lengths, it is very difficult to interpret any patterns or identify any anomalies.</b></figcaption>
+<img src="../fig/example-coverage-all-contigs.PNG">
+<figcaption align = "center"><b>A coverage plot of all of the contigs in the genome assembly producing using Nanopore dataset D. Position on the contig is on the x-axis, and mean coverage depth on the y-axis. Each contig is assigned a different colour. As the contigs start at position 1 but are all different lengths, it is very difficult to interpret any patterns or identify any anomalies.</b></figcaption>
 </figure>
 
 Instead, we will do better to plot mean depth for each contig independently. Here we will just look at the first contig as an example, but you could choose the name of any contig in the genome assembly to investigate. To do this, we will use a package called `dplyr` that can help us filter our dataset.
