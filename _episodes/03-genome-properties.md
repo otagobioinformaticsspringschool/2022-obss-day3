@@ -141,9 +141,8 @@ Now take a look at the results for FastQC and NanoStat, and discuss the overall 
 >
 >> ## Solution
 >> When L = 10 and K = 3: 
->> $$  
+>> 
 >> L - K + 1 = 10 - 3 + 1 = 8.
->> $$
 >> 
 >> There are 8 3-mers in the sequence:
 >> 
