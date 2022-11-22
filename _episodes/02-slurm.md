@@ -30,7 +30,7 @@ Compute | 226 | 36 | 128GB
 
 In order for the resources to be fairly managed, a scheduler is used to allocate resources. The login nodes allow for small interactive tasks to be done, but the bulk of the compute resource needs to be requested through the `slurm` scheduler which will take job resource requests, queue them, and distribute them throughout the compute nodes as suitable allocations become available.
 
-[Mahuika Slurm Partitions](https://support.nesi.org.nz/hc/en-gb/articles/360000204076-Mahuika-Slurm-Partitions)
+On the Mahuika cluster, there are different 'partitions' or 'queues' depending on the resources being requested such as walltime, number of cpus, amount of ram, or gpu usage. This link has a list of the [Mahuika Slurm Partitions](https://support.nesi.org.nz/hc/en-gb/articles/360000204076-Mahuika-Slurm-Partitions).
 
 Up until this point we have been using NeSI in an interactive manner, but we need to start requesting larger allocations of resources in order run our jobs in a timely manner.
 
