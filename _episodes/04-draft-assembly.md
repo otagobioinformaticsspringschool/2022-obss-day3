@@ -66,15 +66,25 @@ As you can see from the SLURM resources, we expect this job to take around 2 hrs
 
 <img width="55%" src="../fig/2hrs-later-dna.png">
 
+Now that we've got more familiar with looking at scripts in Section 3, let's have a refresher on what the `flye.sh` script was doing. You should have an understanding of the SBATCH header now, but what about Flye itself? Let's load the Flye module, and take a look at the help documentation to learn more about the program.
+
+```
+module load Flye/2.9.1-gimkl-2022a-Python-3.10.5
+
+flye -h
+```
+
+Flye has really helpful help documentation! From this we can see that Flye can use both Nanopore and PacBio data to assemble a genome, but that we have to tell it what type of data we are giving it. Now let's investigate the logs produced from running Flye.  
+
 > ## Exercise
-> First, let's check out `.err` and `.out` logs for Flye. Were there any issues? What can you tell about the process? What can you tell about the genome assembly? 
+> Look at your `.err` and `.out` logs for Flye. Were there any issues or errors? What can you tell about the process? What can you tell about the genome assembly? 
 >> ## Solution
 >> Take careful note of any ERROR messages. The logs describe the various processes implemented by Flye, and make some comments about the data along the way. At the end of the log there is a print-out of some brief assembly summary metrics, that will likely vary between groups. 
 > {: .solution}
 {: .challenge}
 
 
-Now let's investigate the outputs.
+After confirming that Flye ran correctly without any errors, we can investigate the outputs.
 
 ```
 ls -lt ~/obss_2022/genome_assembly/results/flye_raw_*/
@@ -95,7 +105,7 @@ You should see a directory that looks like this:
   |-00-assembly/    
 ```
 
-It's always important to check the log files for any other errors that may have occurred, or provide more details on resources used, or data characteristics. Flye logs contain very descriptive information about every step in the assembly process. This kind of transparent processing is valuable. You can see that a brief summary of these logs was printed to our `.err` file. If we jump to the end of the Flye log, we can see it prints the output directory contents, along with the brief summary of assembly statistics included in our `.err` file. 
+It is always important to check the log files for any other errors that may have occurred, or provide more details on resources used, or data characteristics. Flye logs contain very descriptive information about every step in the assembly process. This kind of transparent processing is valuable. You can see that a brief summary of these logs was printed to our `.err` file. If we jump to the end of the Flye log, we can see it prints the output directory contents, along with the brief summary of assembly statistics included in our `.err` file. 
 
 Most importantly, we can see there is a file called `assembly.fasta`. This contains the genome assembly produced by Flye in FASTA format. Let's take a quick look at its contents.
 
