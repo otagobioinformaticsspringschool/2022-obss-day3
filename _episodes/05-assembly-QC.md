@@ -36,7 +36,7 @@ assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fa
 Now let's view the results.
 
 ```
-~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
+less ~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
 ```
 
 > ## Exercise
