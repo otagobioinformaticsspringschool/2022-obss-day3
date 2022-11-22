@@ -76,7 +76,7 @@ You can find more details on its use on the [Slurm Documentation](https://slurm.
 
 Often, bioformatics software has the option to use more CPUs or threads to make the processing go faster. In the case of SLURM, CPUs are a resource that need to be requested of if you are trying to use more than one.
 
-Depending on the software, this is usually done using `#SBATCH --cpus-per-task=N`, where N is the number of CPUs you wish to use. You then can reference this number in your actual command using the variable `SLURM_CPUS_PER_TASK`. It's a good idea to refer to this variable in your command so that if you increase or decrease the number of CPU cores from slurm this gets reflected in the command too. Usually bioinformatics programs that can make use of extra cpu cores will have a `--threads` (or similar) argument.
+Depending on the software, this is usually done using `#SBATCH --cpus-per-task=N`, where N is the number of CPUs you wish to use. You then can reference this number in your actual command using the variable `SLURM_CPUS_PER_TASK`. It's a good idea to refer to this variable in your command so that if you increase or decrease the number of CPU cores from slurm this gets reflected in the command too. Usually bioinformatics programs that can make use of extra cpu cores will have a `--threads` or `-t` (or similar) argument.
 
 ~~~
 #!/bin/bash -e
@@ -89,6 +89,7 @@ Depending on the software, this is usually done using `#SBATCH --cpus-per-task=N
 echo "Number of CPUs requested: $SLURM_CPUS_PER_TASK"
 ~~~
 {: .bash}
+
 
 ### Job Queue
 
@@ -149,6 +150,8 @@ When the job completes, or in some cases earlier, two files will be added to the
 ### Job efficiency
 
 As you run your jobs, it's a good idea to keep efficiency in mind. You want to be requesting sufficient resources to complete your job, but not significantly more than you need "just in case" - the scheduler will assign all of the resource to you that you ask for regardless of if your task actually uses it all. The unused resource is unavailable to others to use so is wasted which is not ideal is a large, multi-user system like NeSI.
+
+More is not always better. Requesting more CPU cores won't always make things go faster - many programs don't scale in a linear fashion, instead they have deminishing returns and will eventually hit a point where there is no increased performance. 
 
 We can determine the efficiency of our resource request usage through the `nn_seff` command. This will report back the job based on the resources requested and what was used.
 
