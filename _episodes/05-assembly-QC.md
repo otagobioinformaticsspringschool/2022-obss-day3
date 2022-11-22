@@ -115,7 +115,7 @@ We have quite a lot of short-read data compared with the data we used for mappin
 #SBATCH --cpus-per-task=8
 
 module purge
-module load BWA/0.7.17-gimkl-2017a SAMtools/1.15.1-GCC-11.3.0
+module load BWA/0.7.17-GCC-11.3.0 SAMtools/1.15.1-GCC-11.3.0
 
 DATA=~/obss_2022/genome_assembly/data/
 OUTDIR=~/obss_2022/genome_assembly/results/coverage/
