@@ -200,11 +200,17 @@ module load Jellyfish/2.3.0-gimkl-2020a
 
 cd ~/obss_2022/genome_assembly/results/
 
+# decompress temporarily into a new file
+gunzip -c ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq.gz > ~/obss_2022/genome_assembly/data/All_trimmed_illumina.temp.fastq
+
 # count 21-mers from read dataset
-jellyfish count -C -m 21 -s 1G -t 10 -o kmer_21_illumina_reads.jf ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq.gz
+jellyfish count -C -m 21 -s 1G -t ${SLURM_CPUS_PER_TASK} -o kmer_21_illumina_reads.jf ~/obss_2022/genome_assembly/data/All_trimmed_illumina.temp.fastq
+
+# remove temporary file
+rm ~/obss_2022/genome_assembly/data/All_trimmed_illumina.temp.fastq
 
 # generate histogram of kmer counts
-jellyfish histo -t 10 kmer_21_illumina_reads.jf  > jf_reads.histo
+jellyfish histo -t ${SLURM_CPUS_PER_TASK} kmer_21_illumina_reads.jf  > jf_reads.histo
 ```
 
 > ## Exercise
