@@ -97,6 +97,7 @@ First, let's make a new output directory for the results of this process.
 
 ```
 mkdir ~/obss_2022/genome_assembly/results/coverage/ 
+cd ~/obss_2022/genome_assembly/results/coverage/
 ```
 
 Mapping long reads to the genome assembly requires a little more resource than when you were mapping short reads yesterday, so we will use a SLURM script for this step. Note that we are specifying a BWA mapping algorithm, `ont2d`, that takes into account the slightly higher error rate expected for our Nanopore reads compared with Illumina short-read data.
