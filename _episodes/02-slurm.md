@@ -34,6 +34,13 @@ On the Mahuika cluster, there are different 'partitions' or 'queues' depending o
 
 Up until this point we have been using NeSI in an interactive manner, but we need to start requesting larger allocations of resources in order run our jobs in a timely manner.
 
+The three main resources are:
+
+- Number of CPUs,
+- Memory (RAM), and
+- Time (How long a job will be allowed to run for)
+
+
 ### Creating a batch script
 
 Jobs on Mahuika and Māui are submitted in the form of a batch script containing the code you want to run and a header of information needed by our job scheduler Slurm.
