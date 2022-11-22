@@ -149,7 +149,7 @@ samtools faidx ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta
 Now we will generate the genomic windows that we will calculate mean coverage across. We are going to set each window to 10 kb, making 5 kb steps before starting a new window. 
 
 ```
-bedtools makewindows -g assembly.fasta.fai -w 10000 -s 5000 > genomic_10kb_intervals.bed
+bedtools makewindows -g ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta.fai -w 10000 -s 5000 > genomic_10kb_intervals.bed
 ```
 
 Once our script has finished running, we can then continue the process to get the mean coverage across the genome assembly.
