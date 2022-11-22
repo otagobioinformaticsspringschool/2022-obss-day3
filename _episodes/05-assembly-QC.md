@@ -69,7 +69,7 @@ module load BUSCO/5.1.3-gimkl-2020a
 cd ~/obss_2022/genome_assembly/results/ 
 
 # Don't forget to correct the name of the input assembly directory
-busco  -i flye_raw_*/assembly.fasta -c 10 -o flye_raw_assembly_busco -m genome -l fungi_odb10
+busco  -i flye_raw_*/assembly.fasta -c ${SLURM_CPUS_PER_TASK} -o flye_raw_assembly_busco -m genome -l fungi_odb10
 ```
 
 > ## Exercise
@@ -126,7 +126,7 @@ echo "making bwa index"
 bwa index assembly.fasta
 
 echo "mapping ONT reads"
-bwa mem -t 8 assembly.fasta ${DATA}All_trimmed_illumina.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped.bam
+bwa mem -t ${SLURM_CPUS_PER_TASK} assembly.fasta ${DATA}All_trimmed_illumina.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped.bam
 
 echo "sorting mapping output"
 samtools sort -o ${OUTDIR}mapped.sorted.bam ${OUTDIR}mapped.bam
