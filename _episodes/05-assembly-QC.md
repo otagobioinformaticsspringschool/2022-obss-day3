@@ -214,7 +214,7 @@ head(coverage)
 To start with, we just want to look at the coverage across one contig. Each contig will have the same starting position (at 1), but the contigs are all different lengths. If we tried to plot the coverage for all the contigs in one plot, it would be messy and difficult to interpret. 
 
 <figure>
-<img src="../fig/example-coverage-all-contigs.PNG">
+<img src="../fig/example-coverage-all-contigs.PNG" style="width:auto;height:auto;max-width:65%;" >
 <figcaption align = "center"><b>A coverage plot of all of the contigs in the genome assembly producing using Nanopore dataset D. Position on the contig is on the x-axis, and mean coverage depth on the y-axis. Each contig is assigned a different colour. As the contigs start at position 1 but are all different lengths, it is very difficult to interpret any patterns or identify any anomalies.</b></figcaption>
 </figure>
 
