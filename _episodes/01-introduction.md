@@ -43,6 +43,6 @@ An essential first step in working with sequencing data is raw read quality asse
 
 
 
-<img width="35%" src="../fig/genome-assembly-flowchart-small.png">
+<img width="35%" src="../fig/genome-assembly-flowchart-v3.png">
 
 This workshop has been designed to run on the NeSI compute infrastructure. All data and software has already been set up for you to use during the workshop.

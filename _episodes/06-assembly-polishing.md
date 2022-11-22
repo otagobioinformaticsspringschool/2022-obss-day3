@@ -28,7 +28,7 @@ We will first perform polishing using the Nanopore data itself, using the progra
 #SBATCH --account=nesi02659
 #SBATCH --output=%x.%j.out
 #SBATCH --error=%x.%j.err
-#SBATCH --time=1:00:00
+#SBATCH --time=00:18:00
 #SBATCH --mem=12G
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4

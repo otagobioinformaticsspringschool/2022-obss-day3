@@ -36,7 +36,7 @@ assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fa
 Now let's view the results.
 
 ```
-~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
+less ~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
 ```
 
 > ## Exercise
@@ -89,17 +89,18 @@ busco  -i flye_raw_*/assembly.fasta -c 10 -o flye_raw_assembly_busco -m genome -
 
 ## 03. Plotting coverage
 
-Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be broken.
+Another form of evidence of assembly quality can come through plotting the sequence data back against the assembly. Spikes in coverage may indicate that repetitive regions have been collapsed by the assembler. On the other hand, regions of low coverage may indicate assembly errors that need to be corrected.
 
-To investigate coverage, we will take our input Nanopore data and map this to the genome assembly using `bwa mem`. We will then use `bedtools` to calculate mean coverage across genomic 'windows' - regions with a pre-determined size.
+To investigate coverage, we will take our input Illumina data and map this to the genome assembly using `bwa mem`. We will then use `bedtools` to calculate mean coverage across genomic 'windows' - regions with a pre-determined size. 
 
 First, let's make a new output directory for the results of this process.
 
 ```
 mkdir ~/obss_2022/genome_assembly/results/coverage/ 
+cd ~/obss_2022/genome_assembly/results/coverage/
 ```
 
-Mapping long reads to the genome assembly requires a little more resource than when you were mapping short reads yesterday, so we will use a SLURM script for this step. Note that we are specifying a BWA mapping algorithm, `ont2d`, that takes into account the slightly higher error rate expected for our Nanopore reads compared with Illumina short-read data.
+We have quite a lot of short-read data compared with the data we used for mapping yesterday, so we will use a SLURM script for this step. 
 
 ```
 #!/bin/bash -e
@@ -108,10 +109,10 @@ Mapping long reads to the genome assembly requires a little more resource than w
 #SBATCH --account=nesi02659
 #SBATCH --output=%x.%j.out
 #SBATCH --error=%x.%j.err
-#SBATCH --time=01:00:00
-#SBATCH --mem=4G
+#SBATCH --time=00:45:00
+#SBATCH --mem=3G
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 
 module purge
 module load BWA/0.7.17-gimkl-2017a SAMtools/1.15.1-GCC-11.3.0
@@ -125,19 +126,20 @@ echo "making bwa index"
 bwa index assembly.fasta
 
 echo "mapping ONT reads"
-bwa mem -x ont2d -t 4 assembly.fasta ${DATA}all_trimmed_ont_A.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped-A.bam
+bwa mem -t 8 assembly.fasta ${DATA}All_trimmed_illumina.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped.bam
 
 echo "sorting mapping output"
-samtools sort -o ${OUTDIR}mapped-A.sorted.bam ${OUTDIR}mapped-A.bam
+samtools sort -o ${OUTDIR}mapped.sorted.bam ${OUTDIR}mapped.bam
 
 echo "getting depth"
-samtools depth ${OUTDIR}mapped-A.sorted.bam > ${OUTDIR}coverage.out
+samtools depth ${OUTDIR}mapped.sorted.bam > ${OUTDIR}coverage.out
 ```
 
-While our data is mapping, we can prepare the genomic windows using `BEDTools`. First, let's load the BEDTools module.
+While our data is mapping, we can prepare the genomic windows using `BEDTools`. First, let's load the modules for the programs we need: BEDTools and SAMtools.
 
 ```
 module load BEDTools/2.30.0-GCC-11.3.0
+module load SAMtools/1.15.1-GCC-11.3.0
 ```
 
 Now we want to gather information about the length of the contigs in the genome assembly. To do this, we can use `SAMtools` to index the genome. The index file produced contains the information we need to pass to BEDTools. 
@@ -149,28 +151,99 @@ samtools faidx ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta
 Now we will generate the genomic windows that we will calculate mean coverage across. We are going to set each window to 10 kb, making 5 kb steps before starting a new window. 
 
 ```
-bedtools makewindows -g assembly.fasta.fai -w 10000 -s 5000 > genomic_10kb_intervals.bed
+bedtools makewindows -g ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta.fai -w 10000 -s 5000 > genomic_10kb_intervals.bed
 ```
 
-Once our script has finished running, we can then continue the process to get the mean coverage across the genome assembly.
+Once our script has finished running, we can then continue the process to get the mean coverage across the genome assembly. First, let's use head to see what information is in the final `coverage.out` file. 
 
-We will extract data from the `coverage.out` file produced by `samtools depth`.
+We will use `awk` to extract data from the `coverage.out` file produced by `samtools depth` and make the format readable by the BEDtools. `awk` is a widely used command line language that is really useful for manipulating files and extracting useful information. In the following command, we are producing a new file that will be in .bed format, containing 4 columns: 
+1. the contig name
+2. the start position of the window within that contig
+3. the end position of the window within that contig
+4. the mean depth of coverage within that window
+
+We tell `awk` to print the first column of `coverage.out`. It then inserts a tab space before printing the content of the second column. It inserts a tab again, before printing another column containing the sum of columns 1 and 2. Finally it adds another tab and then prints the third column of the coverage.out file. 
 
 ```
 awk '{print $1"\t"$2"\t"$2+1"\t"$3}' coverage.out > coverage.bed
 ```
 
-We can then use BEDTools to do a function that calculates the mean coverage within each of the predefined windows. 
+Use `head` to compare the format and content of `coverage.out` and `coverage.bed`. Do you see what we did using `awk`?
+
+We can then use BEDTools to do a function that calculates the mean coverage within each of the predefined windows. This makes it more efficient to plot coverage, as instead of plotting a point for every single base in the assembly, we will have one point (the mean depth) for every 10 kb window.
 
 ```
-bedtools map -a genomic_10kb_intervals.bed -b coverage.bed -c 4 -o mean -g genome.txt > 10kb_window_5kb_step_coverage.txt
+bedtools map -a genomic_10kb_intervals.bed -b coverage.bed -c 4 -o mean -g ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta.fai > 10kb_window_5kb_step_coverage.txt
 ```
 
-We will then plot this `10kb_window_5kb_step_coverage.txt` file using R.
+Use `head` to check the format of this new output file, `10kb_window_5kb_step_coverage.txt`.
+
+Along with being a powerful tool for statistical analysis, R also is useful for data visualisation. We will then plot the mean coverage results file in RStudio. To do this, we need to open a new tab in Jupyter and select the RStudio launcher. Open a new Rscript file.
+
+The first thing we need to do is to change our working directory to the directory where we have written all the coverage results. 
 
 ```
-SCRIPT TO ADD
+setwd("~/obss_2022/genome_assembly/results/coverage/")
 ```
+
+Next we want to pass the `10kb_window_5kb_step_coverage.txt` file we just made in to R, ready to do some processing.
+
+```
+coverage <- read.delim("10kb_window_5kb_step_coverage.txt", header = FALSE)
+```
+
+We can use the R command `head()` in the same way that we use the bash command `head` to check the contents of the data file. 
+
+```
+head(coverage)
+```
+
+Because we used `header = FALSE` when we read in the data file, you can see that R has automatically named our columns V1-V4. Let's rename these to something more meaningful. To do this, we will use a package called `reshape`.
+
+```
+# load the reshape package
+library(reshape)
+
+# provide new column names
+coverage<-rename(coverage,c(V1="contig", V2="startPos", V3="endPos",V4="meanDepth"))
+
+# check the new headers
+head(coverage)
+```
+
+To start with, we just want to look at the coverage across one contig. Each contig will have the same starting position (at 1), but the contigs are all different lengths. If we tried to plot the coverage for all the contigs in one plot, it would be messy and difficult to interpret. 
+
+<figure>
+<img src="../fig/example-coverage-all-contigs.PNG" style="width:auto;height:auto;max-width:65%;" >
+<figcaption align = "center"><b>A coverage plot of all of the contigs in the genome assembly producing using Nanopore dataset D. Position on the contig is on the x-axis, and mean coverage depth on the y-axis. Each contig is assigned a different colour. As the contigs start at position 1 but are all different lengths, it is very difficult to interpret any patterns or identify any anomalies.</b></figcaption>
+</figure>
+
+Instead, we will do better to plot mean depth for each contig independently. Here we will just look at the first contig as an example, but you could choose the name of any contig in the genome assembly to investigate. To do this, we will use a package called `dplyr` that can help us filter our dataset.
+
+First let's find out what the names of all the contigs are in the genome assembly. NOTE: Assemblies produced using different datasets may have different numbers of contigs, and the contigs may have different names. 
+
+```
+unique(coverage$contig)  
+```
+
+Now we know the contig name, we can extract the data for just that contig.
+
+```
+# load the dplyr package
+library(dplyr)
+
+# From the coverage dataset, we will make a new object called 'contig_10' that only contains the data for contig_10
+contig_10 <- coverage %>% 
+  filter(contig == "contig_10") 
+```
+
+Now we are ready to create a coverage plot. To make the most basic plot in R we can use the `plot` command.
+
+```
+plot(contig_10$startPos, contig_10$meanDepth, type = "l")
+```
+
+Can you identify any regions with very high or very low coverage compared to the overall pattern across the contig? What may have caused this?
 
 ## 04. Summary
 

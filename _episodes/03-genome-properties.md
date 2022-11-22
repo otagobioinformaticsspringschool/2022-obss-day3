@@ -23,7 +23,14 @@ It is getting easier and cheaper to sequence and assemble genomes. However, at t
 
 This simple equation relates genome size to the amount of sequence data in an experiment and the coverage (which here means the average number of times that you have sequenced a base in the genome): 
 
-  Genome size (G) = Total number of bases sequenced (T) / genome sequence coverage (N)
+$$  
+G = \frac{T}{N}
+$$
+
+Where:
+- G = genome size
+- T = total bases sequenced
+- N = genome coverage
 
 > ## Exercise
 > 
@@ -133,7 +140,9 @@ Now take a look at the results for FastQC and NanoStat, and discuss the overall 
 > Calculate how many 3-mers there are in this sequence using the equation L - K + 1. What are all the possible 3-mer sequences?
 >
 >> ## Solution
->> When L = 10 and K = 3: L - K + 1 = 10 - 3 + 1 = 8.
+>> When L = 10 and K = 3: 
+>> 
+>> L - K + 1 = 10 - 3 + 1 = 8.
 >> 
 >> There are 8 3-mers in the sequence:
 >> 
