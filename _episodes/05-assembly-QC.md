@@ -164,7 +164,7 @@ awk '{print $1"\t"$2"\t"$2+1"\t"$3}' coverage.out > coverage.bed
 We can then use BEDTools to do a function that calculates the mean coverage within each of the predefined windows. 
 
 ```
-bedtools map -a genomic_10kb_intervals.bed -b coverage.bed -c 4 -o mean -g genome.txt > 10kb_window_5kb_step_coverage.txt
+bedtools map -a genomic_10kb_intervals.bed -b coverage.bed -c 4 -o mean -g ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta.fai > 10kb_window_5kb_step_coverage.txt
 ```
 
 We will then plot this `10kb_window_5kb_step_coverage.txt` file using R.
