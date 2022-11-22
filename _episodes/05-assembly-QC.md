@@ -112,7 +112,7 @@ Mapping long reads to the genome assembly requires a little more resource than w
 #SBATCH --time=01:00:00
 #SBATCH --mem=4G
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=8
 
 module purge
 module load BWA/0.7.17-gimkl-2017a SAMtools/1.15.1-GCC-11.3.0
@@ -126,13 +126,13 @@ echo "making bwa index"
 bwa index assembly.fasta
 
 echo "mapping ONT reads"
-bwa mem -x ont2d -t 4 assembly.fasta ${DATA}all_trimmed_ont_A.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped-A.bam
+bwa mem -t 8 assembly.fasta ${DATA}All_trimmed_illumina.fastq.gz | samtools view -S -b - > ${OUTDIR}mapped.bam
 
 echo "sorting mapping output"
-samtools sort -o ${OUTDIR}mapped-A.sorted.bam ${OUTDIR}mapped-A.bam
+samtools sort -o ${OUTDIR}mapped.sorted.bam ${OUTDIR}mapped.bam
 
 echo "getting depth"
-samtools depth ${OUTDIR}mapped-A.sorted.bam > ${OUTDIR}coverage.out
+samtools depth ${OUTDIR}mapped.sorted.bam > ${OUTDIR}coverage.out
 ```
 
 While our data is mapping, we can prepare the genomic windows using `BEDTools`. First, let's load the BEDTools module.
