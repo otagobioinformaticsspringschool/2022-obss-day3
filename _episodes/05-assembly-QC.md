@@ -30,7 +30,8 @@ Even if an assembly is highly contiguous, or shows high completeness in terms of
 An initial step in the assembly QC process is to generate basic assembly metrics. Today we will be using the `assemblathon_stats.pl` script to extract these metrics. You will need to modify the name of the input file depending on the read set you used for the assembly.
 
 ```
-assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta > ~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
+cd ~/obss_2022/genome_assembly/scripts/
+./assemblathon_stats.pl ~/obss_2022/genome_assembly/results/flye_raw_*/assembly.fasta > ~/obss_2022/genome_assembly/results/flye_raw_assembly_QC.txt
 ```
 
 Now let's view the results.
