@@ -35,7 +35,7 @@ We will first perform polishing using the Nanopore data itself, using the progra
 #SBATCH --gpus-per-node A100:1
 
 module purge
-module load medaka/1.6.1-Miniconda3-4.12.0
+module load medaka/1.6.0-Miniconda3-4.12.0
 
 cd ~/obss_2022/genome_assembly/results/
 
