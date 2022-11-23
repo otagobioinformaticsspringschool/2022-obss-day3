@@ -39,7 +39,7 @@ module load medaka/1.6.0-Miniconda3-4.12.0
 
 cd ~/obss_2022/genome_assembly/results/
 
-medaka_consensus -i ~/obss_2022/genome_assembly/data/all_trimmed_ont_*.fastq.gz -d flye_raw_*/assembly.fasta -o medaka_polish  -t 4 -m r941_min_sup_g507
+medaka_consensus -i ~/obss_2022/genome_assembly/data/all_trimmed_ont_*.fastq.gz -d flye_raw_*/assembly.fasta -o medaka_polish  -t ${SLURM_CPUS_PER_TASK} -m r941_min_sup_g507
 ```
 
 It is good practice to compare assembly metrics at the end of each step in these processes to see whether the assembly is continuing to improve. In the interests of time, today we will just use our `assemblathon_stats.pl` script to collect metrics, and run BUSCO once more at the end of our polishing steps.
@@ -74,7 +74,7 @@ cd ~/obss_2022/genome_assembly/results/
 bwa mem medaka_polish/consensus.fasta ~/obss_2022/genome_assembly/data/All_trimmed_illumina.fastq.gz > illumina_trimmed_mapped_to_medaka_consensus.sam
 
 # step 3. sort mapped reads
-samtools sort  -@ 8 -o illumina_trimmed_mapped_to_medaka_consensus.sorted.bam illumina_trimmed_mapped_to_medaka_consensus.sam
+samtools sort  -@ ${SLURM_CPUS_PER_TASK} -o illumina_trimmed_mapped_to_medaka_consensus.sorted.bam illumina_trimmed_mapped_to_medaka_consensus.sam
 
 # step 4. make index of sorted mapped reads
 samtools index illumina_trimmed_mapped_to_medaka_consensus.sorted.bam
@@ -108,7 +108,7 @@ cd ~/obss_2022/genome_assembly/results/
 java -Xmx16G -jar $EBROOTPILON/pilon.jar \
     --genome medaka_polish/consensus.fasta \
     --frags illumina_trimmed_mapped_to_medaka_consensus.sorted.bam \
-    --changes --vcf --diploid --threads 16 \
+    --changes --vcf --diploid --threads ${SLURM_CPUS_PER_TASK} \
     --output medaka_pilon_polish1 \
     --minmq 30 \
     --minqual 30
